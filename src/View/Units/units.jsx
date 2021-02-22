@@ -1,5 +1,7 @@
 import { Row } from "react-bootstrap";
 import ATable from "../../Component/Table/Table";
+import AModal from "../../Component/Modal/modal";
+import AddUnitForm from "../../Component/Form/AddUnitForm";
 const unitInfo = [
   {
     unitNum: 1,
@@ -11,7 +13,7 @@ const unitInfo = [
     to: "1399/1/1",
   },
   {
-    unitNum: 1,
+    unitNum: 2,
     area: 150,
     ownerName: "رضا حسینی",
     tenentName: "محمد اکبری",
@@ -20,7 +22,7 @@ const unitInfo = [
     to: "1399/1/1",
   },
   {
-    unitNum: 1,
+    unitNum: 3,
     area: 150,
     ownerName: "رضا حسینی",
     tenentName: "محمد اکبری",
@@ -29,7 +31,7 @@ const unitInfo = [
     to: "1399/1/1",
   },
   {
-    unitNum: 1,
+    unitNum: 4,
     area: 150,
     ownerName: "رضا حسینی",
     tenentName: "محمد اکبری",
@@ -63,10 +65,6 @@ const headerTitle = [
     title: "تاریخ شروع / پایان مالکیت",
     field: "liveDate",
   },
-  {
-    title: "ویرایش / حذف",
-    field: "butn",
-  },
 ];
 
 class UnitInfo {
@@ -80,25 +78,6 @@ class UnitInfo {
   get liveDate() {
     return this.from + " تا " + this.to;
   }
-  get butn() {
-    return (
-      <div>
-        <button
-          className="btn pb-0 pr-2 pl-2 pt-1 d-inline-block"
-          onClick={this.onEdit}
-        >
-          <i class="fas fa-edit" aria-hidden="true"></i>
-        </button>
-
-        <button
-          className="btn pb-0 pr-2 pl-2 pt-1 d-inline-block"
-          onClick={this.onDelete}
-        >
-          <i class="fa fa-trash" aria-hidden="true"></i>
-        </button>
-      </div>
-    );
-  }
 }
 
 const Units = () => {
@@ -109,7 +88,15 @@ const Units = () => {
         tableTitle="لیست واحدها"
         rows={unitInfo.map((c) => new UnitInfo(c, handleDelete, handleDelete))}
         headers={headerTitle}
-      ></ATable>
+        actions={[
+          { icon: "fas fa-edit", onClick: handleDelete },
+          { icon: "fa fa-trash", onClick: handleDelete },
+        ]}
+      >
+        <AModal buttonLabel="ایجاد واحد">
+          <AddUnitForm></AddUnitForm>
+        </AModal>
+      </ATable>
     </>
   );
 };
