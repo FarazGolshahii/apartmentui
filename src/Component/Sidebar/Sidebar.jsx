@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 
 const Sidebar = () => {
   return (
-    <div className="navbar-light bg-white h-100 shadow pt-5 p-2">
+    <div className="navbar-light bg-white h-100 shadow pt-5 p-1">
       {routes.map((route) => (
         <div>
           <NavLink

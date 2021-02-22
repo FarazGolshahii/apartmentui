@@ -4,7 +4,7 @@ const Header = (props) => {
   console.log(props.children);
   return (
     <Navbar
-      className="navbar-top bg-gradient-info"
+      className="navbar-top bg-gradient-info mb-3"
       expand="md"
       id="navbar-main"
     >
