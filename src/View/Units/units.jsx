@@ -3,6 +3,8 @@ import ATable from "../../Component/Table/Table";
 import AModal from "../../Component/Modal/modal";
 import AddUnitForm from "../../Component/Form/AddUnitForm";
 import EditUnitForm from "../../Component/Form/EditUnitForm";
+import UnControlledModal from "../../Component/Modal/UncontrolledModal";
+import { useState } from "react";
 const unitInfo = [
   {
     unitNum: 1,
@@ -80,13 +82,27 @@ class UnitInfo {
 }
 
 const Units = () => {
-  const handleDelete = () => console.log("sasa");
-  const handleEdit = () => {
-    <>
-      <AModal buttonLabel="ایجاد هزینه">
-        <EditUnitForm></EditUnitForm>
-      </AModal>
-    </>;
+  const [editData, setEditData] = useState({ isActive: false, unitId: null });
+  const [deleteData, setDeleteData] = useState({
+    isActive: false,
+    unitId: null,
+  });
+
+  const editToggle = () =>
+    setEditData({ ...editData, isActive: !editData.isActive });
+  const deleteToggle = () =>
+    setDeleteData({ ...deleteData, isActive: !deleteData.isActive });
+  const handleDelete = (unitId) => {
+    setDeleteData({
+      isActive: true,
+      unitId: unitId,
+    });
+  };
+  const handleEdit = (unitId) => {
+    setEditData({
+      isActive: true,
+      unitId: unitId,
+    });
   };
   return (
     <>
@@ -102,6 +118,12 @@ const Units = () => {
         <AModal buttonLabel="ایجاد واحد">
           <AddUnitForm></AddUnitForm>
         </AModal>
+        <UnControlledModal toggle={editToggle} modal={editData.isActive}>
+          <EditUnitForm></EditUnitForm>
+        </UnControlledModal>
+        <UnControlledModal toggle={deleteToggle} modal={deleteData.isActive}>
+          <h1>حذف</h1>
+        </UnControlledModal>
       </ATable>
     </>
   );

@@ -36,7 +36,6 @@ const AddCostForm = () => {
 
   const handleChange = (event) => {
     const newData = { ...formData };
-    debugger;
     newData[event.target.name] = event.target.value;
     setFormData(newData);
     console.log(formData);
@@ -97,14 +96,15 @@ const AddCostForm = () => {
                     type="select"
                     name="formul"
                     id="formul"
-                    value={formData.formul}
                     onChange={handleChange}
                   >
                     <option>نحوه محاسبه</option>
-                    <option value="1">بر اساس متراژ</option>
-                    <option value="2">بر اساس نفرات</option>
-                    <option value="3">بر اساس متراژ و نفرات</option>
-                    <option value="4">بر اساس مقدار ثابت</option>
+                    <option value={formData.formul}>بر اساس متراژ</option>
+                    <option value={formData.formul}>بر اساس نفرات</option>
+                    <option value={formData.formul}>
+                      بر اساس متراژ و نفرات
+                    </option>
+                    <option value={formData.formul}>بر اساس مقدار ثابت</option>
                   </Input>
                 </FormGroup>
               </Col>

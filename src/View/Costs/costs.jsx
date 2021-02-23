@@ -1,7 +1,10 @@
+import { useState } from "react";
 import AddCostForm from "../../Component/Form/AddCostForm";
 import AddUnitForm from "../../Component/Form/AddUnitForm";
 import AModal from "../../Component/Modal/modal";
 import ATable from "../../Component/Table/Table";
+import EditCostForm from "../../Component/Form/EditCostForm";
+import UnControlledModal from "../../Component/Modal/UncontrolledModal";
 
 const costInfo = [
   {
@@ -42,21 +45,45 @@ class CostInfo {
   }
 }
 const Costs = () => {
-  const handleDelete = () => console.log("sasa");
+  const [editData, setEditData] = useState({ isActive: false, unitId: null });
+  const [deleteData, setDeleteData] = useState({
+    isActive: false,
+    unitId: null,
+  });
+
+  const editToggle = () =>
+    setEditData({ ...editData, isActive: !editData.isActive });
+  const deleteToggle = () =>
+    setDeleteData({ ...deleteData, isActive: !deleteData.isActive });
+  const handleDelete = (unitId) => {
+    setDeleteData({
+      isActive: true,
+      unitId: unitId,
+    });
+  };
+  const handleEdit = (unitId) => {
+    setEditData({
+      isActive: true,
+      unitId: unitId,
+    });
+  };
   return (
     <>
       <ATable
         tableTitle="لیست هزینه ها"
-        rows={costInfo.map((c) => new CostInfo(c, handleDelete, handleDelete))}
+        rows={costInfo.map((c) => new CostInfo(c, handleEdit, handleDelete))}
         headers={headerTitle}
         actions={[
-          { icon: "fas fa-edit", onClick: handleDelete },
+          { icon: "fas fa-edit", onClick: handleEdit },
           { icon: "fa fa-trash", onClick: handleDelete },
         ]}
       >
         <AModal buttonLabel="ایجاد هزینه">
           <AddCostForm></AddCostForm>
         </AModal>
+        <UnControlledModal toggle={editToggle} modal={editData.isActive}>
+          <EditCostForm></EditCostForm>
+        </UnControlledModal>
       </ATable>
     </>
   );
