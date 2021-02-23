@@ -23,7 +23,7 @@ async function GetUnit() {
   return await axios.get(BaseAPIUrl + "baseinfo/building");
 }
 
-const AddUnitForm = () => {
+const EditUnitForm = () => {
   const [building, setBuilding] = useState([]);
 
   const [formData, setFormData] = useState({
@@ -174,4 +174,4 @@ const AddUnitForm = () => {
   );
 };
 
-export default AddUnitForm;
+export default EditUnitForm;

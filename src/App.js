@@ -4,6 +4,7 @@ import { Route } from "react-router-dom";
 import Sidebar from "./Component/Sidebar/Sidebar";
 import Dashboard from "./View/Dashboard/dashboard";
 import Units from "./View/Units/units";
+import Costs from "./View/Costs/costs";
 import Header from "./Component/Header/Header";
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
 
           <Route path="/dashboard" component={Dashboard} />
           <Route path="/units" component={Units} />
+          <Route path="/costs" component={Costs} />
         </Col>
       </Row>
     </Container>

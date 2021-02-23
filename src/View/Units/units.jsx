@@ -2,6 +2,7 @@ import { Row } from "react-bootstrap";
 import ATable from "../../Component/Table/Table";
 import AModal from "../../Component/Modal/modal";
 import AddUnitForm from "../../Component/Form/AddUnitForm";
+import EditUnitForm from "../../Component/Form/EditUnitForm";
 const unitInfo = [
   {
     unitNum: 1,
@@ -68,11 +69,9 @@ const headerTitle = [
 ];
 
 class UnitInfo {
-  constructor(data, onDelete, onEdit) {
+  constructor(data) {
     for (let item in data) {
       this[item] = data[item];
-      this.onDelete = onDelete;
-      this.onEdit = onEdit;
     }
   }
   get liveDate() {
@@ -82,14 +81,21 @@ class UnitInfo {
 
 const Units = () => {
   const handleDelete = () => console.log("sasa");
+  const handleEdit = () => {
+    <>
+      <AModal buttonLabel="ایجاد هزینه">
+        <EditUnitForm></EditUnitForm>
+      </AModal>
+    </>;
+  };
   return (
     <>
       <ATable
         tableTitle="لیست واحدها"
-        rows={unitInfo.map((c) => new UnitInfo(c, handleDelete, handleDelete))}
+        rows={unitInfo.map((c) => new UnitInfo(c, handleEdit, handleDelete))}
         headers={headerTitle}
         actions={[
-          { icon: "fas fa-edit", onClick: handleDelete },
+          { icon: "fas fa-edit", onClick: handleEdit },
           { icon: "fa fa-trash", onClick: handleDelete },
         ]}
       >
