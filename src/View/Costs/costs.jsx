@@ -50,6 +50,16 @@ const GetUnitData = async (id) => {
 };
 
 const Costs = () => {
+  const addCost = (data) => 
+  {
+    axios.post(BaseAPIUrl + "baseinfo/expense", JSON.stringify(data),
+    {headers:{'Content-Type' : 'text/json' }});
+  }
+  const deleteCost = (data) => 
+  {
+    axios.delete(BaseAPIUrl + "baseinfo/expense", JSON.stringify(data),
+    {headers:{'Content-Type' : 'text/json' }});
+  }
   const [editData, setEditData] = useState({ isActive: false, unitId: null });
   const [deleteData, setDeleteData] = useState({
     isActive: false,
@@ -85,7 +95,7 @@ const Costs = () => {
         ]}
       >
         <AModal buttonLabel="ایجاد هزینه">
-          <CostForm></CostForm>
+          <CostForm onSubmit={addCost}></CostForm>
         </AModal>
         <UnControlledModal toggle={editToggle} modal={editData.isActive}>
           <CostForm data={costInfo[0]}></CostForm>

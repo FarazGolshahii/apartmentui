@@ -12,29 +12,35 @@ import {
   Row,
   Col,
   Label,
+  Button
 } from "reactstrap";
 import BaseAPIUrl from "../../View/APIConfig";
 
-function PostUnit() {
-  return axios.post();
-}
 
-const CostForm = ({ data }) => {
+
+const CostForm = ({ data, onSubmit }) => {
+  
+  
   const [formData, setFormData] = useState(
     data
       ? data
       : {
-          costName: null,
-          cost: null,
-          formul: null,
+          expenseId: null,
+          title: null,
+          expenseCategoryId: null,
+          price: null,
           from: null,
           to: null,
         }
   );
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    onSubmit(formData);
+  }
+
   const handleChange = (event) => {
     const newData = { ...formData };
-    debugger;
     newData[event.target.name] = event.target.value;
     setFormData(newData);
     console.log(formData);
@@ -49,7 +55,8 @@ const CostForm = ({ data }) => {
           </div>
         </CardHeader>
         <CardBody>
-          <Form role="form">
+          <Form role="form" onSubmit={handleSubmit}>
+            <input name="expenseId" value={formData.expenseId} hidden/>
             <Row className="item-center ">
               <Col>
                 <div className="text-right text-muted">
@@ -57,10 +64,9 @@ const CostForm = ({ data }) => {
                 </div>
                 <Input
                   type="text"
-                  name="costName"
-                  id="costName"
+                  name="title"
                   placeholder="نام هزینه"
-                  value={formData.costName}
+                  value={formData.title}
                   onChange={handleChange}
                 />
               </Col>
@@ -72,11 +78,10 @@ const CostForm = ({ data }) => {
                 </div>
                 <Input
                   type="number"
-                  name="cost"
-                  id="cost"
+                  name="price"
                   step="10000"
                   placeholder="مبلغ (ریال)"
-                  value={formData.cost}
+                  value={formData.price}
                   onChange={handleChange}
                 />
               </Col>
@@ -87,16 +92,15 @@ const CostForm = ({ data }) => {
                   </div>
                   <Input
                     type="select"
-                    name="formul"
-                    id="formul"
-                    value={formData.formul}
+                    name="expenseCategoryId"
+                    value={formData.expenseCategoryId}
                     onChange={handleChange}
                   >
                     <option>نحوه محاسبه</option>
                     <option value="1">بر اساس متراژ</option>
                     <option value="2">بر اساس نفرات</option>
                     <option value="3">بر اساس متراژ و نفرات</option>
-                    <option value="4">بر اساس مقدار ثابت</option>
+                    <option value="0">بر اساس مقدار ثابت</option>
                   </Input>
                 </FormGroup>
               </Col>
@@ -129,6 +133,9 @@ const CostForm = ({ data }) => {
                 </Col>
               </Row>
             </FormGroup>
+            <Button color="secondary" className="mt-2">
+              اضافه کردن
+          </Button>
           </Form>
         </CardBody>
       </Card>
