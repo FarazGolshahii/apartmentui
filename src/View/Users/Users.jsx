@@ -1,40 +1,33 @@
 import { useState } from "react";
-import CostForm from "../../Component/Form/CostForm";
 import AModal from "../../Component/Modal/modal";
-import ATable from "../../Component/Table/Table";
 import UnControlledModal from "../../Component/Modal/UncontrolledModal";
-import axios from "axios";
-import BaseAPIUrl from "../APIConfig";
-
-const costInfo = [
+import ATable from "../../Component/Table/Table";
+import AddUserForm from "../../Component/Form/AddUserForm";
+import EditUserForm from "../../Component/Form/EditUserForm";
+const userInfo = [
   {
-    costName: "قبض آب",
-    cost: 2000000,
-    formul: "2",
-    from: "2000-01-01",
-    to: "2021-01-01",
+    UserName: "احمد اکبری",
+    PhoneNum: "09126753456",
+    from: "1398/1/1",
+    to: "1399/1/1",
   },
 ];
 const headerTitle = [
   {
-    title: "نام هزینه",
-    field: "costName",
+    title: "نام و نام خانوادگی",
+    field: "UserName",
   },
   {
-    title: "نوع فرمول",
-    field: "formul",
+    title: "شماره تماس",
+    field: "PhoneNum",
   },
   {
-    title: "مبلغ",
-    field: "cost",
-  },
-  {
-    title: "بازه موثر پرداخت",
+    title: "تاریخ شروع / پایان مالکیت",
     field: "liveDate",
   },
 ];
 
-class CostInfo {
+class UserInfo {
   constructor(data) {
     for (let item in data) {
       this[item] = data[item];
@@ -45,11 +38,7 @@ class CostInfo {
   }
 }
 
-const GetUnitData = async (id) => {
-  return await axios.get(BaseAPIUrl + `BaseInfo/Apartment/${id}`);
-};
-
-const Costs = () => {
+const Users = () => {
   const [editData, setEditData] = useState({ isActive: false, unitId: null });
   const [deleteData, setDeleteData] = useState({
     isActive: false,
@@ -72,27 +61,26 @@ const Costs = () => {
       unitId: unitId,
     });
   };
-
   return (
     <>
       <ATable
-        tableTitle="لیست هزینه ها"
-        rows={costInfo.map((c) => new CostInfo(c, handleEdit, handleDelete))}
+        tableTitle="لیست افراد ساختمان"
+        rows={userInfo.map((c) => new UserInfo(c, handleEdit, handleDelete))}
         headers={headerTitle}
         actions={[
           { icon: "fas fa-edit", onClick: handleEdit },
           { icon: "fa fa-trash", onClick: handleDelete },
         ]}
       >
-        <AModal buttonLabel="ایجاد هزینه">
-          <CostForm></CostForm>
+        <AModal buttonLabel="ایجاد عضو جدید">
+          <AddUserForm></AddUserForm>
         </AModal>
         <UnControlledModal toggle={editToggle} modal={editData.isActive}>
-          <CostForm data={costInfo[0]}></CostForm>
+          <EditUserForm></EditUserForm>
         </UnControlledModal>
       </ATable>
     </>
   );
 };
 
-export default Costs;
+export default Users;

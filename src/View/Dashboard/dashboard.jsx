@@ -1,10 +1,6 @@
 import ATable from "../../Component/Table/Table";
 const Dashboard = () => {
-  return (
-    <>
-      <ATable></ATable>
-    </>
-  );
+  return <></>;
 };
 
 export default Dashboard;

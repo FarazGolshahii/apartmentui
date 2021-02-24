@@ -19,20 +19,18 @@ function PostUnit() {
   return axios.post();
 }
 
-async function GetUnit() {
-  return await axios.get(BaseAPIUrl + "baseinfo/building");
-}
-
-const AddCostForm = () => {
-  const [building, setBuilding] = useState([]);
-
-  const [formData, setFormData] = useState({
-    costName: "قبض آب",
-    cost: 2000000,
-    formul: "بر اساس متراژ",
-    from: "1398/1/1",
-    to: "1399/1/1",
-  });
+const CostForm = ({ data }) => {
+  const [formData, setFormData] = useState(
+    data
+      ? data
+      : {
+          costName: null,
+          cost: null,
+          formul: null,
+          from: null,
+          to: null,
+        }
+  );
 
   const handleChange = (event) => {
     const newData = { ...formData };
@@ -41,13 +39,6 @@ const AddCostForm = () => {
     setFormData(newData);
     console.log(formData);
   };
-
-  useEffect(async () => {
-    let cost = await GetUnit();
-    console.log(cost);
-
-    setBuilding(cost);
-  }, []);
 
   return (
     <>
@@ -83,7 +74,8 @@ const AddCostForm = () => {
                   type="number"
                   name="cost"
                   id="cost"
-                  placeholder="مبلغ"
+                  step="10000"
+                  placeholder="مبلغ (ریال)"
                   value={formData.cost}
                   onChange={handleChange}
                 />
@@ -144,4 +136,4 @@ const AddCostForm = () => {
   );
 };
 
-export default AddCostForm;
+export default CostForm;

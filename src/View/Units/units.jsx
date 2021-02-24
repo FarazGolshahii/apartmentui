@@ -121,9 +121,6 @@ const Units = () => {
         <UnControlledModal toggle={editToggle} modal={editData.isActive}>
           <EditUnitForm></EditUnitForm>
         </UnControlledModal>
-        <UnControlledModal toggle={deleteToggle} modal={deleteData.isActive}>
-          <h1>حذف</h1>
-        </UnControlledModal>
       </ATable>
     </>
   );

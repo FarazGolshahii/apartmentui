@@ -6,6 +6,7 @@ import Dashboard from "./View/Dashboard/dashboard";
 import Units from "./View/Units/units";
 import Costs from "./View/Costs/costs";
 import Header from "./Component/Header/Header";
+import Users from "./View/Users/Users";
 function App() {
   return (
     <Container fluid className="h-100 p-0">
@@ -14,11 +15,12 @@ function App() {
           <Sidebar />
         </Col>
         <Col className="p-0">
-          <Header brandText={"شارژ ساختمان ما"}></Header>
+          <Header brandText={"سیستم مدیریت شارژ ساختمان"}></Header>
 
           <Route path="/dashboard" component={Dashboard} />
           <Route path="/units" component={Units} />
           <Route path="/costs" component={Costs} />
+          <Route path="/Users" component={Users} />
         </Col>
       </Row>
     </Container>

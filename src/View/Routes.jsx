@@ -3,6 +3,7 @@ import Units from "./Units/units";
 import Costs from "./Costs/costs";
 import Bill from "./Bill/bill";
 import History from "./History/History";
+import Users from "./Users/Users";
 const routes = [
   {
     path: "/dashboard",
@@ -31,6 +32,13 @@ const routes = [
     name: "صورتحساب / پرداخت",
     icon: "",
     component: Bill,
+    layout: "/admin",
+  },
+  {
+    path: "/Users",
+    name: "اعضای ساختمان",
+    icon: "",
+    component: Users,
     layout: "/admin",
   },
   {
