@@ -7,6 +7,7 @@ import Units from "./View/Units/units";
 import Costs from "./View/Costs/costs";
 import Header from "./Component/Header/Header";
 import Users from "./View/Users/Users";
+import OwnerTenent from "./View/OwnerTenent/OwnerTenent";
 function App() {
   return (
     <Container fluid className="h-100 p-0">
@@ -19,6 +20,7 @@ function App() {
 
           <Route path="/dashboard" component={Dashboard} />
           <Route path="/units" component={Units} />
+          <Route path="/units/Ownet&Tenent" component={OwnerTenent} />
           <Route path="/costs" component={Costs} />
           <Route path="/Users" component={Users} />
         </Col>

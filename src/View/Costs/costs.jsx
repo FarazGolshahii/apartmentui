@@ -8,9 +8,10 @@ import BaseAPIUrl from "../APIConfig";
 
 const costInfo = [
   {
-    costName: "قبض آب",
-    cost: 2000000,
-    formul: "2",
+    expenseId: null,
+    title: "قبض آب",
+    price: 2000000,
+    expenseCategoryId: "2",
     from: "2000-01-01",
     to: "2021-01-01",
   },
@@ -18,15 +19,15 @@ const costInfo = [
 const headerTitle = [
   {
     title: "نام هزینه",
-    field: "costName",
+    field: "title",
   },
   {
     title: "نوع فرمول",
-    field: "formul",
+    field: "expenseCategoryId",
   },
   {
     title: "مبلغ",
-    field: "cost",
+    field: "price",
   },
   {
     title: "بازه موثر پرداخت",

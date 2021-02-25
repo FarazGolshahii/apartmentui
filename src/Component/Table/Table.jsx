@@ -28,7 +28,7 @@ const ATable = ({ headers, tableTitle, rows, actions, children }) => {
                     {headers.map((header) => (
                       <th scope="col">{header.title}</th>
                     ))}
-                    {actions ? <th>ویرایش / حذف</th> : null}
+                    {actions ? <th>ویرایش / حذف</th> :  <th>ورود / حذف</th>}
                   </tr>
                 </thead>
                 <tbody>

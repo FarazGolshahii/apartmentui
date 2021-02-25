@@ -1,46 +1,16 @@
-import { Row } from "react-bootstrap";
 import ATable from "../../Component/Table/Table";
 import AModal from "../../Component/Modal/modal";
-import AddUnitForm from "../../Component/Form/AddUnitForm";
-import EditUnitForm from "../../Component/Form/EditUnitForm";
+import UnitForm from "../../Component/Form/UnitForm";
 import UnControlledModal from "../../Component/Modal/UncontrolledModal";
 import { useState } from "react";
+import axios from "axios";
+import BaseAPIUrl from "../APIConfig";
+
 const unitInfo = [
   {
+    unitId: null,
     unitNum: 1,
     area: 150,
-    ownerName: "رضا حسینی",
-    tenentName: "محمد اکبری",
-    tenentNum: 4,
-    from: "1398/1/1",
-    to: "1399/1/1",
-  },
-  {
-    unitNum: 2,
-    area: 150,
-    ownerName: "رضا حسینی",
-    tenentName: "محمد اکبری",
-    tenentNum: 4,
-    from: "1398/1/1",
-    to: "1399/1/1",
-  },
-  {
-    unitNum: 3,
-    area: 150,
-    ownerName: "رضا حسینی",
-    tenentName: "محمد اکبری",
-    tenentNum: 4,
-    from: "1398/1/1",
-    to: "1399/1/1",
-  },
-  {
-    unitNum: 4,
-    area: 150,
-    ownerName: "رضا حسینی",
-    tenentName: "محمد اکبری",
-    tenentNum: 4,
-    from: "1398/1/1",
-    to: "1399/1/1",
   },
 ];
 const headerTitle = [
@@ -52,22 +22,6 @@ const headerTitle = [
     title: "متراژ",
     field: "area",
   },
-  {
-    title: "نام ساکن",
-    field: "tenentName",
-  },
-  {
-    title: "نام مالک",
-    field: "ownerName",
-  },
-  {
-    title: "تعداد ساکنین",
-    field: "tenentNum",
-  },
-  {
-    title: "تاریخ شروع / پایان مالکیت",
-    field: "liveDate",
-  },
 ];
 
 class UnitInfo {
@@ -76,20 +30,27 @@ class UnitInfo {
       this[item] = data[item];
     }
   }
-  get liveDate() {
-    return this.from + " تا " + this.to;
-  }
 }
 
 const Units = () => {
-  const [editData, setEditData] = useState({ isActive: false, unitId: null });
+  const addUnit = (data) => 
+  {
+    axios.post(BaseAPIUrl + "baseinfo/expense", JSON.stringify(data),
+    {headers:{'Content-Type' : 'text/json' }});
+  }
+  const deleteUnit = (data) => 
+  {
+    axios.delete(BaseAPIUrl + "baseinfo/expense", JSON.stringify(data),
+    {headers:{'Content-Type' : 'text/json' }});
+  }
+  const [enterData, setEnterData] = useState({ isActive: false, unitId: null });
   const [deleteData, setDeleteData] = useState({
     isActive: false,
     unitId: null,
   });
 
-  const editToggle = () =>
-    setEditData({ ...editData, isActive: !editData.isActive });
+  const enterToggle = () =>
+    setEnterData({ ...enterData, isActive: !enterData.isActive });
   const deleteToggle = () =>
     setDeleteData({ ...deleteData, isActive: !deleteData.isActive });
   const handleDelete = (unitId) => {
@@ -98,28 +59,29 @@ const Units = () => {
       unitId: unitId,
     });
   };
-  const handleEdit = (unitId) => {
-    setEditData({
+  const handleEnter = (unitId) => {
+    setEnterData({
       isActive: true,
       unitId: unitId,
     });
   };
+
   return (
     <>
       <ATable
         tableTitle="لیست واحدها"
-        rows={unitInfo.map((c) => new UnitInfo(c, handleEdit, handleDelete))}
+        rows={unitInfo.map((c) => new UnitInfo(c, handleEnter, handleDelete))}
         headers={headerTitle}
         actions={[
-          { icon: "fas fa-edit", onClick: handleEdit },
+          { icon: "fas fa-sign-in-alt", onClick: handleEnter },
           { icon: "fa fa-trash", onClick: handleDelete },
         ]}
       >
         <AModal buttonLabel="ایجاد واحد">
-          <AddUnitForm></AddUnitForm>
+        <UnitForm onSubmit={addUnit}></UnitForm>
         </AModal>
-        <UnControlledModal toggle={editToggle} modal={editData.isActive}>
-          <EditUnitForm></EditUnitForm>
+        <UnControlledModal toggle={enterToggle} modal={enterData.isActive}>
+          <UnitForm data={unitInfo[0]}></UnitForm>
         </UnControlledModal>
       </ATable>
     </>

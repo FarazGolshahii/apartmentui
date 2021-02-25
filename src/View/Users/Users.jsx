@@ -2,14 +2,14 @@ import { useState } from "react";
 import AModal from "../../Component/Modal/modal";
 import UnControlledModal from "../../Component/Modal/UncontrolledModal";
 import ATable from "../../Component/Table/Table";
-import AddUserForm from "../../Component/Form/AddUserForm";
-import EditUserForm from "../../Component/Form/EditUserForm";
+import UserForm from "../../Component/Form/UserForm";
+import axios from "axios";
+import BaseAPIUrl from "../APIConfig";
 const userInfo = [
   {
+    userId:null,
     UserName: "احمد اکبری",
     PhoneNum: "09126753456",
-    from: "1398/1/1",
-    to: "1399/1/1",
   },
 ];
 const headerTitle = [
@@ -21,10 +21,6 @@ const headerTitle = [
     title: "شماره تماس",
     field: "PhoneNum",
   },
-  {
-    title: "تاریخ شروع / پایان مالکیت",
-    field: "liveDate",
-  },
 ];
 
 class UserInfo {
@@ -33,12 +29,22 @@ class UserInfo {
       this[item] = data[item];
     }
   }
-  get liveDate() {
-    return this.from + " تا " + this.to;
-  }
 }
+const GetUnitData = async (id) => {
+  return await axios.get(BaseAPIUrl + `BaseInfo/Apartment/${id}`);
+};
 
 const Users = () => {
+  const addUser = (data) => 
+  {
+    axios.post(BaseAPIUrl + "baseinfo/expense", JSON.stringify(data),
+    {headers:{'Content-Type' : 'text/json' }});
+  }
+  const deleteCost = (data) => 
+  {
+    axios.delete(BaseAPIUrl + "baseinfo/expense", JSON.stringify(data),
+    {headers:{'Content-Type' : 'text/json' }});
+  }
   const [editData, setEditData] = useState({ isActive: false, unitId: null });
   const [deleteData, setDeleteData] = useState({
     isActive: false,
@@ -61,6 +67,7 @@ const Users = () => {
       unitId: unitId,
     });
   };
+
   return (
     <>
       <ATable
@@ -73,10 +80,10 @@ const Users = () => {
         ]}
       >
         <AModal buttonLabel="ایجاد عضو جدید">
-          <AddUserForm></AddUserForm>
+        <UserForm onSubmit={addUser}></UserForm>
         </AModal>
         <UnControlledModal toggle={editToggle} modal={editData.isActive}>
-          <EditUserForm></EditUserForm>
+          <UserForm data={userInfo[0]}></UserForm>
         </UnControlledModal>
       </ATable>
     </>

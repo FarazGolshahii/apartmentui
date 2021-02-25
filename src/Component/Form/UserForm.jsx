@@ -13,9 +13,9 @@ import {
   Col,
   Label,
   ButtonDropdown,
+  Button
 } from "reactstrap";
 import BaseAPIUrl from "../../View/APIConfig";
-import { Button, Collapse } from "bootstrap";
 
 function PostUnit() {
   return axios.post();
@@ -25,18 +25,22 @@ async function GetUnit() {
   return await axios.get(BaseAPIUrl + "baseinfo/building");
 }
 
-const AddUserForm = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const toggle = () => setIsOpen(!isOpen);
+const UserForm = ({ data, onSubmit }) => {
+  const [formData, setFormData] = useState(
+    data
+      ? data
+      : {
+          userId: null,
+          UserName: null,
+          PhoneNum: null,
+        }
+        
+  );
 
-  const [building, setBuilding] = useState([]);
-
-  const [formData, setFormData] = useState({
-    UserName: "",
-    PhoneNum: "",
-    from: "",
-    to: "",
-  });
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    onSubmit(formData);
+  };
 
   const handleChange = (event) => {
     const newData = { ...formData };
@@ -44,13 +48,6 @@ const AddUserForm = () => {
     setFormData(newData);
     console.log(formData);
   };
-
-  useEffect(async () => {
-    let unit = await GetUnit();
-    console.log(unit);
-
-    setBuilding(unit);
-  }, []);
 
   return (
     <>
@@ -62,6 +59,7 @@ const AddUserForm = () => {
         </CardHeader>
         <CardBody>
           <Form role="form">
+          <input name="expenseId" value={formData.userId} hidden/>
             <Row className="item-center ">
               <Col>
                 <div className="text-right text-muted">
@@ -90,6 +88,9 @@ const AddUserForm = () => {
                 />
               </Col>
             </Row>
+            <Button color="secondary" className="mt-4">
+              اضافه کردن
+            </Button>
           </Form>
         </CardBody>
       </Card>
@@ -97,4 +98,4 @@ const AddUserForm = () => {
   );
 };
 
-export default AddUserForm;
+export default UserForm;

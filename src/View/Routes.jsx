@@ -4,6 +4,7 @@ import Costs from "./Costs/costs";
 import Bill from "./Bill/bill";
 import History from "./History/History";
 import Users from "./Users/Users";
+import OwnerTenent from "./OwnerTenent/OwnerTenent";
 const routes = [
   {
     path: "/dashboard",
@@ -19,7 +20,14 @@ const routes = [
     component: Units,
     layout: "/admin",
   },
-
+  ,
+  {
+    path: "/Owner&Tenent",
+    name: "اطلاعات مالکین و ساکنین",
+    icon: "",
+    component: OwnerTenent,
+    layout: "/admin",
+  },
   {
     path: "/costs",
     name: "هزینه ها",

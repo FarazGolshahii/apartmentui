@@ -11,11 +11,6 @@ const UnControlledModal = ({
     <Modal isOpen={modal} toggle={toggle} className={className}>
       <ModalHeader toggle={toggle}>{titleLabel}</ModalHeader>
       <ModalBody>{children}</ModalBody>
-      <ModalFooter>
-        <Button color="secondary" onClick={toggle}>
-          ویرایش
-        </Button>
-      </ModalFooter>
     </Modal>
   );
 };
