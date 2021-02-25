@@ -1,5 +1,6 @@
 import { useState } from "react";
 import CostForm from "../../Component/Form/CostForm";
+import CostCategoryForm from "../../Component/Form/CostCategoryForm";
 import AModal from "../../Component/Modal/modal";
 import ATable from "../../Component/Table/Table";
 import UnControlledModal from "../../Component/Modal/UncontrolledModal";
@@ -53,6 +54,7 @@ const GetUnitData = async (id) => {
 const Costs = () => {
   const addCost = (data) => 
   {
+    data.amount = +data.amount;
     axios.post(BaseAPIUrl + "baseinfo/expense", JSON.stringify(data),
     {headers:{'Content-Type' : 'text/json' }});
   }
@@ -61,6 +63,7 @@ const Costs = () => {
     axios.delete(BaseAPIUrl + "baseinfo/expense", JSON.stringify(data),
     {headers:{'Content-Type' : 'text/json' }});
   }
+
   const [editData, setEditData] = useState({ isActive: false, unitId: null });
   const [deleteData, setDeleteData] = useState({
     isActive: false,
@@ -84,6 +87,13 @@ const Costs = () => {
     });
   };
 
+  const handleAddCategory = async (data) =>
+  {
+    data.formulaType = +data.formulaType;
+    await axios.post(BaseAPIUrl + "BaseInfo/Expense/Category", JSON.stringify(data),
+    {headers:{'Content-Type' : 'text/json' }});
+  }
+
   return (
     <>
       <ATable
@@ -97,6 +107,9 @@ const Costs = () => {
       >
         <AModal buttonLabel="ایجاد هزینه">
           <CostForm onSubmit={addCost}></CostForm>
+        </AModal>
+        <AModal buttonLabel="ایجاد گروه هزینه">
+          <CostCategoryForm onSubmit={handleAddCategory}></CostCategoryForm>
         </AModal>
         <UnControlledModal toggle={editToggle} modal={editData.isActive}>
           <CostForm data={costInfo[0]}></CostForm>

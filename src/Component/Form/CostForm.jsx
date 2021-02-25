@@ -20,7 +20,6 @@ import BaseAPIUrl from "../../View/APIConfig";
 
 const CostForm = ({ data, onSubmit }) => {
   
-  
   const [formData, setFormData] = useState(
     data
       ? data
@@ -28,11 +27,12 @@ const CostForm = ({ data, onSubmit }) => {
           expenseId: null,
           title: null,
           expenseCategoryId: null,
-          price: null,
+          amount: null,
           from: null,
           to: null,
         }
   );
+  const [categories, setCategories] = useState([]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -43,8 +43,21 @@ const CostForm = ({ data, onSubmit }) => {
     const newData = { ...formData };
     newData[event.target.name] = event.target.value;
     setFormData(newData);
+  };
+
+  const handleSelectChange = (event) => {
+    const newData = { ...formData };
+    newData[event.target.name] = +event.target.value;
+    setFormData(newData);
     console.log(formData);
   };
+
+  useEffect(async() => 
+  {
+    let {data :categoryList} = await axios.get(BaseAPIUrl + "Baseinfo/Expense/Category");
+    console.log(categoryList);
+    setCategories(categoryList.data);
+  }, [])
 
   return (
     <>
@@ -78,29 +91,27 @@ const CostForm = ({ data, onSubmit }) => {
                 </div>
                 <Input
                   type="number"
-                  name="price"
+                  name="amount"
                   step="10000"
                   placeholder="مبلغ (ریال)"
-                  value={formData.price}
+                  value={formData.amount}
                   onChange={handleChange}
                 />
               </Col>
               <Col>
                 <FormGroup>
                   <div className="text-right text-muted">
-                    <small>نحوه محاسبه هزینه:</small>
+                    <small>گروه هزینه:</small>
                   </div>
                   <Input
                     type="select"
                     name="expenseCategoryId"
                     value={formData.expenseCategoryId}
-                    onChange={handleChange}
+                    onChange={handleSelectChange}
                   >
-                    <option>نحوه محاسبه</option>
-                    <option value="1">بر اساس متراژ</option>
-                    <option value="2">بر اساس نفرات</option>
-                    <option value="3">بر اساس متراژ و نفرات</option>
-                    <option value="0">بر اساس مقدار ثابت</option>
+                    {
+                      categories.map(c => <option value={c.expensCategoryId}>{c.expensCategoryName}</option>)
+                    }
                   </Input>
                 </FormGroup>
               </Col>
