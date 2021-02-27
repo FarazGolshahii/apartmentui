@@ -41,6 +41,8 @@ const UserForm = ({ data, onSubmit }) => {
     onSubmit(formData);
   };
 
+  const handleChange = (e) => {};
+
   return (
     <>
       <Card className=" border-0">
