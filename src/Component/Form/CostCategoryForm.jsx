@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 
-// reactstrap components
 import {
   Card,
   CardHeader,
@@ -13,31 +12,22 @@ import {
   Label,
   Button,
 } from "reactstrap";
+import formMode from "./FormConfig";
+import useFormData from "./UseFormData";
 
-const CostCategoryForm = ({ getData, onSubmit }) => {
-  const [formData, setFormData] = useState({
-    expenseCategoryId: null,
-    expensCategoryName: null,
-    formulaType: null,
+const formDataTemplate = {
+  expenseCategoryId: null,
+  expensCategoryName: null,
+  formulaType: null,
+};
+
+const CostCategoryForm = ({ onSuccess }) => {
+  const [formData, handleChange, handleSubmit] = useFormData({
+    mode: formMode.add,
+    data: formDataTemplate,
+    onSuccess: onSuccess,
+    url: "baseInfo/expense/category",
   });
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    onSubmit(formData);
-  };
-
-  const handleChange = (event) => {
-    const newData = { ...formData };
-    newData[event.target.name] = event.target.value;
-    setFormData(newData);
-    console.log(formData);
-  };
-
-  useEffect(async () => {
-    if (getData) {
-      setFormData(await getData());
-    }
-  }, []);
 
   return (
     <>

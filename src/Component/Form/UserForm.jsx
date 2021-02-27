@@ -13,16 +13,15 @@ import {
   Col,
   Label,
   ButtonDropdown,
-  Button
+  Button,
 } from "reactstrap";
-import BaseAPIUrl from "../../View/APIConfig";
-
+import { GetData } from "../../Services/ApiServices";
 function PostUnit() {
   return axios.post();
 }
 
 async function GetUnit() {
-  return await axios.get(BaseAPIUrl + "baseinfo/building");
+  return await GetData("baseinfo/building");
 }
 
 const UserForm = ({ data, onSubmit }) => {
@@ -34,19 +33,11 @@ const UserForm = ({ data, onSubmit }) => {
           UserName: null,
           PhoneNum: null,
         }
-        
   );
 
   const handleSubmit = (e) => {
     e.preventDefault();
     onSubmit(formData);
-  };
-
-  const handleChange = (event) => {
-    const newData = { ...formData };
-    newData[event.target.name] = event.target.value;
-    setFormData(newData);
-    console.log(formData);
   };
 
   return (
@@ -59,7 +50,7 @@ const UserForm = ({ data, onSubmit }) => {
         </CardHeader>
         <CardBody>
           <Form role="form">
-          <input name="expenseId" value={formData.userId} hidden/>
+            <input name="expenseId" value={formData.userId} hidden />
             <Row className="item-center ">
               <Col>
                 <div className="text-right text-muted">

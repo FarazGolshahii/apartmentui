@@ -13,14 +13,14 @@ import {
   Col,
   Label,
 } from "reactstrap";
-import BaseAPIUrl from "../../View/APIConfig";
+import { GetData } from "../../Services/ApiServices";
 
 function PostUnit() {
   return axios.post();
 }
 
 async function GetUnit() {
-  return await axios.get(BaseAPIUrl + "baseinfo/building");
+  return await GetData("baseinfo/building");
 }
 
 const EditUnitForm = () => {

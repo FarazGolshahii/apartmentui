@@ -3,8 +3,7 @@ import AModal from "../../Component/Modal/modal";
 import UnitForm from "../../Component/Form/UnitForm";
 import UnControlledModal from "../../Component/Modal/UncontrolledModal";
 import { useState } from "react";
-import axios from "axios";
-import BaseAPIUrl from "../APIConfig";
+import { PostData } from "../../Services/ApiServices";
 
 const unitInfo = [
   {
@@ -35,13 +34,11 @@ class UnitInfo {
 const Units = () => {
   const addUnit = (data) => 
   {
-    axios.post(BaseAPIUrl + "baseinfo/expense", JSON.stringify(data),
-    {headers:{'Content-Type' : 'text/json' }});
+    PostData("baseinfo/expense", JSON.stringify(data));
   }
   const deleteUnit = (data) => 
   {
-    axios.delete(BaseAPIUrl + "baseinfo/expense", JSON.stringify(data),
-    {headers:{'Content-Type' : 'text/json' }});
+    deleteData("baseinfo/expense", JSON.stringify(data));
   }
   const [enterData, setEnterData] = useState({ isActive: false, unitId: null });
   const [deleteData, setDeleteData] = useState({

@@ -3,8 +3,8 @@ import AModal from "../../Component/Modal/modal";
 import UnControlledModal from "../../Component/Modal/UncontrolledModal";
 import ATable from "../../Component/Table/Table";
 import UserForm from "../../Component/Form/UserForm";
-import axios from "axios";
-import BaseAPIUrl from "../APIConfig";
+import { DeleteData, GetData, PostData } from "../../Services/ApiServices";
+
 const userInfo = [
   {
     userId:null,
@@ -31,19 +31,17 @@ class UserInfo {
   }
 }
 const GetUnitData = async (id) => {
-  return await axios.get(BaseAPIUrl + `BaseInfo/Apartment/${id}`);
+  return await GetData(`BaseInfo/Apartment/${id}`);
 };
 
 const Users = () => {
   const addUser = (data) => 
   {
-    axios.post(BaseAPIUrl + "baseinfo/expense", JSON.stringify(data),
-    {headers:{'Content-Type' : 'text/json' }});
+    PostData("baseinfo/expense", JSON.stringify(data));
   }
   const deleteCost = (data) => 
   {
-    axios.delete(BaseAPIUrl + "baseinfo/expense", JSON.stringify(data),
-    {headers:{'Content-Type' : 'text/json' }});
+    DeleteData("baseinfo/expense", JSON.stringify(data));
   }
   const [editData, setEditData] = useState({ isActive: false, unitId: null });
   const [deleteData, setDeleteData] = useState({
