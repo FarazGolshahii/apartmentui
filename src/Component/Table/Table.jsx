@@ -9,7 +9,7 @@ import {
 import APagination from "./Pagination";
 import "./Table.css";
 
-const DashboardTable = ({ headers, tableTitle, rows, actions, children }) => {
+const ATable = ({ headers, tableTitle, rows, actions, children }) => {
   return (
     <>
       <Container fluid>
@@ -23,12 +23,12 @@ const DashboardTable = ({ headers, tableTitle, rows, actions, children }) => {
                 </Row>
               </CardHeader>
               <table class="table">
-                <thead>
+                <thead className="thead-light">
                   <tr>
                     {headers.map((header) => (
                       <th scope="col">{header.title}</th>
                     ))}
-                    {actions ? <th>ویرایش / حذف</th> : <th>ورود / حذف</th>}
+                    {actions ? <th>ویرایش / حذف</th> : null}
                   </tr>
                 </thead>
                 <tbody>
@@ -64,4 +64,4 @@ const DashboardTable = ({ headers, tableTitle, rows, actions, children }) => {
   );
 };
 
-export default DashboardTable;
+export default ATable;

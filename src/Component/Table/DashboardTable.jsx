@@ -2,6 +2,8 @@ import React from "react";
 
 // reactstrap components
 import {
+  Button,
+  Table,
   Card,
   CardBody,
   CardTitle,
@@ -10,6 +12,7 @@ import {
   Col,
   CardHeader,
 } from "reactstrap";
+import ATable from "./Table";
 const DashboardTable = () => {
   return (
     <Container fluid>
@@ -125,6 +128,37 @@ const DashboardTable = () => {
                   </span>
                 </p>
               </CardBody>
+            </Card>
+          </Col>
+          <Col className="mb-5 mb-xl-0 mt-3">
+            <Card className="shadow">
+              <CardHeader className="border-0">
+                <Row className="align-items-center">
+                  <div className="col">
+                    <h3 className="mb-0 text-right">کار های انجام نشده</h3>
+                  </div>
+                </Row>
+              </CardHeader>
+              <Table className="align-items-center table-flush" responsive>
+                <thead className="thead-light">
+                  <tr>
+                    <th scope="col">عنوان</th>
+                    <th scope="col">توضیحات</th>
+                    <th scope="col">لینک</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">قبض آب</th>
+                    <td>قبض آب بر اساس تعداد نفرات ساختمان انجام شده است</td>
+                    <td>
+                      <button className="btn pb-0 bg-warning pr-2 pl-2 pt-1 text-white">
+                        مشاهده<i aria-hidden="true"></i>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </Table>
             </Card>
           </Col>
         </Row>
