@@ -1,6 +1,6 @@
 import routes from "../../View/Routes";
 import { NavLink } from "react-router-dom";
-
+import { Col, NavbarBrand, Row } from "reactstrap";
 const Sidebar = () => {
   return (
     <div className="navbar-light bg-white h-100 shadow pt-5 p-1">
@@ -8,10 +8,15 @@ const Sidebar = () => {
         <div>
           <NavLink
             to={route.path}
-            className="text-right btn w-100"
+            className="text-right btn w-100 nav"
             activeClassName="btn-info"
           >
-            {route.name}
+            <Row>
+              <div className="icon icon-shape bg-white text-info rounded-circle ml-2 ">
+                <i className={route.icon} />
+              </div>
+              <Col className="mt-2">{route.name}</Col>
+            </Row>
           </NavLink>
         </div>
       ))}

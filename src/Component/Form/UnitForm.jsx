@@ -1,6 +1,4 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-// reactstrap components
+import React, { useState } from "react";
 import {
   Card,
   CardHeader,
@@ -22,11 +20,6 @@ const UnitForm = ({ data, onSubmit }) => {
           unitId: null,
           unitNum: null,
           area: null,
-          ownerName: null,
-          tenentName: null,
-          tenentNum: null,
-          from: null,
-          to: null,
         }
   );
 

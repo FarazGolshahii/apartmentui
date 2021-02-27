@@ -30,8 +30,9 @@ const UserForm = ({ data, onSubmit }) => {
       ? data
       : {
           userId: null,
-          UserName: null,
-          PhoneNum: null,
+          Name: null,
+          LastName: null,
+          PhoneNumber: null,
         }
   );
 
@@ -54,36 +55,51 @@ const UserForm = ({ data, onSubmit }) => {
             <Row className="item-center ">
               <Col>
                 <div className="text-right text-muted">
-                  <small>نام و نام خانوادگی:</small>
+                  <small>نام:</small>
                 </div>
                 <Input
                   type="text"
-                  name="UserName"
-                  id="UserName"
+                  name="Name"
+                  id="Name"
                   placeholder="نام"
-                  value={formData.UserName}
+                  value={formData.Name}
                   onChange={handleChange}
                 />
               </Col>
               <Col>
                 <div className="text-right text-muted">
-                  <small>شماره تماس:</small>
+                  <small>نام خانوادگی:</small>
                 </div>
                 <Input
                   type="text"
-                  name="PhoneNum"
-                  id="PhoneNum"
-                  placeholder="شماره"
-                  value={formData.PhoneNum}
+                  name="LastName"
+                  id="LastName"
+                  placeholder="نام خانوادگی"
+                  value={formData.LastName}
                   onChange={handleChange}
                 />
               </Col>
             </Row>
-            <Button color="secondary" className="mt-4">
-              اضافه کردن
-            </Button>
+            <Col>
+              <div className="text-right text-muted">
+                <small>شماره تماس:</small>
+              </div>
+              <Input
+                type="text"
+                name="PhoneNum"
+                id="PhoneNum"
+                placeholder="شماره"
+                value={formData.PhoneNum}
+                onChange={handleChange}
+              />
+            </Col>
           </Form>
         </CardBody>
+        <Col className="item-center">
+          <Button color="secondary" className="mt-4">
+            اضافه کردن
+          </Button>
+        </Col>
       </Card>
     </>
   );
