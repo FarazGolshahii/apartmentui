@@ -1,18 +1,15 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-// reactstrap components
+import React, { useState } from "react";
 import {
   Card,
   CardHeader,
   CardBody,
-  FormGroup,
   Form,
   Input,
   InputGroup,
   Row,
   Col,
   Label,
-  Button
+  Button,
 } from "reactstrap";
 
 const UnitForm = ({ data, onSubmit }) => {
@@ -23,11 +20,6 @@ const UnitForm = ({ data, onSubmit }) => {
           unitId: null,
           unitNum: null,
           area: null,
-          ownerName: null,
-          tenentName: null,
-          tenentNum: null,
-          from: null,
-          to: null,
         }
   );
 
@@ -53,7 +45,7 @@ const UnitForm = ({ data, onSubmit }) => {
         </CardHeader>
         <CardBody>
           <Form role="form">
-          <input name="expenseId" value={formData.unitId} hidden/>
+            <input name="expenseId" value={formData.unitId} hidden />
             <Row>
               <Col>
                 <div className="text-right text-muted">

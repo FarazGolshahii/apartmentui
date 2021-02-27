@@ -6,6 +6,7 @@ import ATable from "../../Component/Table/Table";
 import UnControlledModal from "../../Component/Modal/UncontrolledModal";
 import axios from "axios";
 import BaseAPIUrl from "../APIConfig";
+import { Row } from "reactstrap";
 
 const costInfo = [
   {
@@ -52,17 +53,17 @@ const GetUnitData = async (id) => {
 };
 
 const Costs = () => {
-  const addCost = (data) => 
-  {
+  const addCost = (data) => {
     data.amount = +data.amount;
-    axios.post(BaseAPIUrl + "baseinfo/expense", JSON.stringify(data),
-    {headers:{'Content-Type' : 'text/json' }});
-  }
-  const deleteCost = (data) => 
-  {
-    axios.delete(BaseAPIUrl + "baseinfo/expense", JSON.stringify(data),
-    {headers:{'Content-Type' : 'text/json' }});
-  }
+    axios.post(BaseAPIUrl + "baseinfo/expense", JSON.stringify(data), {
+      headers: { "Content-Type": "text/json" },
+    });
+  };
+  const deleteCost = (data) => {
+    axios.delete(BaseAPIUrl + "baseinfo/expense", JSON.stringify(data), {
+      headers: { "Content-Type": "text/json" },
+    });
+  };
 
   const [editData, setEditData] = useState({ isActive: false, unitId: null });
   const [deleteData, setDeleteData] = useState({
@@ -87,12 +88,14 @@ const Costs = () => {
     });
   };
 
-  const handleAddCategory = async (data) =>
-  {
+  const handleAddCategory = async (data) => {
     data.formulaType = +data.formulaType;
-    await axios.post(BaseAPIUrl + "BaseInfo/Expense/Category", JSON.stringify(data),
-    {headers:{'Content-Type' : 'text/json' }});
-  }
+    await axios.post(
+      BaseAPIUrl + "BaseInfo/Expense/Category",
+      JSON.stringify(data),
+      { headers: { "Content-Type": "text/json" } }
+    );
+  };
 
   return (
     <>
