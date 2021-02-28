@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from "react";
+<<<<<<< HEAD
 import { GetData } from "../../Services/ApiServices";
 import generateText from "../../Utility/FormButtonGenerator";
 import { NetDatetime } from "../../Utility/NETUtility";
 import formMode from "./FormConfig";
 import useFormData from "./UseFormData";
+=======
+
+>>>>>>> b3fed793b94346f67b0c7440c47654461e3da64e
 import {
   Card,
   CardHeader,
@@ -16,7 +20,15 @@ import {
   Label,
   Button,
 } from "reactstrap";
+<<<<<<< HEAD
 
+=======
+import { GetData } from "../../Services/ApiServices";
+import generateText from "../../Utility/FormButtonGenerator";
+import { NetDatetime } from "../../Utility/NETUtility";
+import formMode from "./FormConfig";
+import useFormData from "./UseFormData";
+>>>>>>> b3fed793b94346f67b0c7440c47654461e3da64e
 
 const formDataTemplate = {
   expenseId: null,

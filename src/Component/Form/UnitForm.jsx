@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import React, { useEffect, useState } from "react";
+=======
+import React, { useState } from "react";
+>>>>>>> b3fed793b94346f67b0c7440c47654461e3da64e
 import {
   Card,
   CardHeader,
@@ -10,7 +14,10 @@ import {
   Col,
   Label,
   Button,
+<<<<<<< HEAD
   FormGroup,
+=======
+>>>>>>> b3fed793b94346f67b0c7440c47654461e3da64e
 } from "reactstrap";
 import { GetData } from "../../Services/ApiServices";
 import generateText from "../../Utility/FormButtonGenerator";
@@ -18,6 +25,7 @@ import { NetDatetime } from "../../Utility/NETUtility";
 import formMode from "./FormConfig";
 import useFormData from "./UseFormData";
 
+<<<<<<< HEAD
 const formDataTemplate = {
   unitId: null,
   unitNumber: null,
@@ -59,6 +67,42 @@ const UnitForm = ({ url = "BaseInfo/Expense", data, mode, onSuccess }) => {
         <Form role="form">
           <input name="expenseId" value={formData.unitId} hidden />
           <FormGroup>
+=======
+const UnitForm = ({ data, onSubmit }) => {
+  const [formData, setFormData] = useState(
+    data
+      ? data
+      : {
+          unitId: null,
+          unitNum: null,
+          area: null,
+        }
+  );
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    onSubmit(formData);
+  };
+
+  const handleChange = (event) => {
+    const newData = { ...formData };
+    newData[event.target.name] = event.target.value;
+    setFormData(newData);
+    console.log(formData);
+  };
+
+  return (
+    <>
+      <Card className=" border-0">
+        <CardHeader className="bg-transparent">
+          <div className="text-muted text-center">
+            <Label>ایجاد واحد جدید</Label>
+          </div>
+        </CardHeader>
+        <CardBody>
+          <Form role="form">
+            <input name="expenseId" value={formData.unitId} hidden />
+>>>>>>> b3fed793b94346f67b0c7440c47654461e3da64e
             <Row>
               <Col>
                 <div className="text-right text-muted">

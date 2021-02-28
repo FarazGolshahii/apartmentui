@@ -59,6 +59,11 @@ const CostCategoryForm = ({ onSuccess }) => {
                   />
                 </FormGroup>
               </Col>
+<<<<<<< HEAD
+=======
+            </Row>
+            <Row>
+>>>>>>> b3fed793b94346f67b0c7440c47654461e3da64e
               <Col>
                 <FormGroup>
                   <div className="text-right text-muted">

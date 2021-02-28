@@ -2,7 +2,12 @@ import { useEffect, useState } from "react";
 import CostForm from "../../Component/Form/CostForm";
 import CostCategoryForm from "../../Component/Form/CostCategoryForm";
 import ATable from "../../Component/Table/Table";
+<<<<<<< HEAD
 import { GetData} from "../../Services/ApiServices";
+=======
+import UnControlledModal from "../../Component/Modal/UncontrolledModal";
+import { DeleteData, GetData, PostData } from "../../Services/ApiServices";
+>>>>>>> b3fed793b94346f67b0c7440c47654461e3da64e
 import formMode from "../../Component/Form/FormConfig";
 import { NetDatetime } from "../../Utility/NETUtility";
 import useModal from "../../Component/Modal/UseModal";
@@ -69,6 +74,7 @@ const Costs = () => {
         ]}
       >
         <Button
+<<<<<<< HEAD
           className="mx-2 p-2"
           color="danger"
           onClick={() => toggleModal("addCategory")}
@@ -81,6 +87,20 @@ const Costs = () => {
           onClick={() => toggleModal("add")}
         >
           ایجاد هزینه
+=======
+          className="mx-2"
+          color="danger"
+          onClick={() => toggleModal("add")}
+        >
+          افزودن هزینه
+        </Button>
+        <Button
+          className="mx-2"
+          color="danger"
+          onClick={() => toggleModal("addCategory")}
+        >
+          افزودن گروه هزینه
+>>>>>>> b3fed793b94346f67b0c7440c47654461e3da64e
         </Button>
       </ATable>
       <FormModal
