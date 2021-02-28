@@ -13,7 +13,7 @@ const AModal = ({ titleLabel, buttonLabel, children, className }) => {
       </Button>
       <Modal isOpen={modal} toggle={toggle} className={className}>
         <ModalHeader toggle={toggle}>{titleLabel}</ModalHeader>
-        <ModalBody>{children}</ModalBody>
+        <ModalBody onSubmit={toggle}>{children}</ModalBody>
       </Modal>
     </div>
   );

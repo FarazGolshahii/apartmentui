@@ -1,33 +1,27 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CostForm from "../../Component/Form/CostForm";
-import AModal from "../../Component/Modal/modal";
+import CostCategoryForm from "../../Component/Form/CostCategoryForm";
 import ATable from "../../Component/Table/Table";
-import UnControlledModal from "../../Component/Modal/UncontrolledModal";
-import axios from "axios";
-import BaseAPIUrl from "../APIConfig";
+import { GetData} from "../../Services/ApiServices";
+import formMode from "../../Component/Form/FormConfig";
+import { NetDatetime } from "../../Utility/NETUtility";
+import useModal from "../../Component/Modal/UseModal";
+import { Button } from "reactstrap";
+import FormModal from "../../Component/Modal/FormModal";
+import DeleteForm from "../../Component/Form/DeleteForm";
 
-const costInfo = [
-  {
-    expenseId: null,
-    title: "قبض آب",
-    price: 2000000,
-    expenseCategoryId: "2",
-    from: "2000-01-01",
-    to: "2021-01-01",
-  },
-];
 const headerTitle = [
   {
     title: "نام هزینه",
     field: "title",
   },
   {
-    title: "نوع فرمول",
-    field: "expenseCategoryId",
+    title: "گروه",
+    field: "expenseCategoryName",
   },
   {
     title: "مبلغ",
-    field: "price",
+    field: "amount",
   },
   {
     title: "بازه موثر پرداخت",
@@ -42,66 +36,78 @@ class CostInfo {
     }
   }
   get liveDate() {
-    return this.from + " تا " + this.to;
+    return NetDatetime(this.from) + " تا " + NetDatetime(this.to);
+  }
+  get id() {
+    return this.expenseId;
   }
 }
 
-const GetUnitData = async (id) => {
-  return await axios.get(BaseAPIUrl + `BaseInfo/Apartment/${id}`);
-};
-
 const Costs = () => {
-  const addCost = (data) => 
-  {
-    axios.post(BaseAPIUrl + "baseinfo/expense", JSON.stringify(data),
-    {headers:{'Content-Type' : 'text/json' }});
-  }
-  const deleteCost = (data) => 
-  {
-    axios.delete(BaseAPIUrl + "baseinfo/expense", JSON.stringify(data),
-    {headers:{'Content-Type' : 'text/json' }});
-  }
-  const [editData, setEditData] = useState({ isActive: false, unitId: null });
-  const [deleteData, setDeleteData] = useState({
-    isActive: false,
-    unitId: null,
-  });
+  const [costs, setCosts] = useState([]);
+  const [modalState, toggleModal, getModalData] = useModal([
+    "add",
+    "edit",
+    "delete",
+    "addCategory",
+  ]);
 
-  const editToggle = () =>
-    setEditData({ ...editData, isActive: !editData.isActive });
-  const deleteToggle = () =>
-    setDeleteData({ ...deleteData, isActive: !deleteData.isActive });
-  const handleDelete = (unitId) => {
-    setDeleteData({
-      isActive: true,
-      unitId: unitId,
-    });
-  };
-  const handleEdit = (unitId) => {
-    setEditData({
-      isActive: true,
-      unitId: unitId,
-    });
-  };
+  useEffect(async () => {
+    const { data: costs } = await GetData("BaseInfo/Expense");
+    setCosts(costs);
+  }, [modalState]);
 
   return (
     <>
       <ATable
         tableTitle="لیست هزینه ها"
-        rows={costInfo.map((c) => new CostInfo(c, handleEdit, handleDelete))}
+        rows={costs.map((c) => new CostInfo(c))}
         headers={headerTitle}
         actions={[
-          { icon: "fas fa-edit", onClick: handleEdit },
-          { icon: "fa fa-trash", onClick: handleDelete },
+          { icon: "fas fa-edit", onClick: (id) => toggleModal("edit", id) },
+          { icon: "fa fa-trash", onClick: (id) => toggleModal("delete", id) },
         ]}
       >
-        <AModal buttonLabel="ایجاد هزینه">
-          <CostForm onSubmit={addCost}></CostForm>
-        </AModal>
-        <UnControlledModal toggle={editToggle} modal={editData.isActive}>
-          <CostForm data={costInfo[0]}></CostForm>
-        </UnControlledModal>
+        <Button
+          className="mx-2 p-2"
+          color="danger"
+          onClick={() => toggleModal("addCategory")}
+        >
+          ایجاد گروه هزینه
+        </Button>
+        <Button
+          className="mx-2 p-2"
+          color="danger"
+          onClick={() => toggleModal("add")}
+        >
+          ایجاد هزینه
+        </Button>
       </ATable>
+      <FormModal
+        Form={CostForm}
+        toggle={() => toggleModal("add")}
+        data={getModalData("add")}
+        mode={formMode.add}
+      />
+      <FormModal
+        Form={CostCategoryForm}
+        toggle={() => toggleModal("addCategory")}
+        data={getModalData("addCategory")}
+        mode={formMode.add}
+      />
+      <FormModal
+        Form={CostForm}
+        toggle={() => toggleModal("edit")}
+        data={getModalData("edit")}
+        mode={formMode.edit}
+      />
+      <FormModal
+        Form={DeleteForm}
+        url="BaseInfo/Expense"
+        toggle={() => toggleModal("delete")}
+        data={getModalData("delete")}
+        mode={formMode.delete}
+      />
     </>
   );
 };

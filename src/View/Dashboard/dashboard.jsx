@@ -1,6 +1,7 @@
-import ATable from "../../Component/Table/Table";
+import { Card, CardBody, CardTitle, Col, Container, Row } from "reactstrap";
+import DashboardTable from "../../Component/Table/DashboardTable";
 const Dashboard = () => {
-  return <></>;
+  return <DashboardTable></DashboardTable>;
 };
 
 export default Dashboard;

@@ -23,12 +23,12 @@ const ATable = ({ headers, tableTitle, rows, actions, children }) => {
                 </Row>
               </CardHeader>
               <table class="table">
-                <thead>
+                <thead className="thead-light">
                   <tr>
                     {headers.map((header) => (
                       <th scope="col">{header.title}</th>
                     ))}
-                    {actions ? <th>ویرایش / حذف</th> :  <th>ورود / حذف</th>}
+                    {actions ? <th>ویرایش / حذف</th> : null}
                   </tr>
                 </thead>
                 <tbody>
@@ -42,7 +42,7 @@ const ATable = ({ headers, tableTitle, rows, actions, children }) => {
                           {actions.map((action) => (
                             <button
                               className="btn pb-0 pr-2 pl-2 pt-1 d-inline-block"
-                              onClick={action.onClick}
+                              onClick={() => action.onClick(row.id)}
                             >
                               <i className={action.icon} aria-hidden="true"></i>
                             </button>

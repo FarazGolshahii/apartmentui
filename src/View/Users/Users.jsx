@@ -1,25 +1,25 @@
-import { useState } from "react";
-import AModal from "../../Component/Modal/modal";
-import UnControlledModal from "../../Component/Modal/UncontrolledModal";
+import { useEffect, useState } from "react";
 import ATable from "../../Component/Table/Table";
 import UserForm from "../../Component/Form/UserForm";
-import axios from "axios";
-import BaseAPIUrl from "../APIConfig";
-const userInfo = [
-  {
-    userId:null,
-    UserName: "احمد اکبری",
-    PhoneNum: "09126753456",
-  },
-];
+import { DeleteData, GetData, PostData } from "../../Services/ApiServices";
+import formMode from "../../Component/Form/FormConfig";
+import DeleteForm from "../../Component/Form/DeleteForm";
+import FormModal from "../../Component/Modal/FormModal";
+import { Button } from "reactstrap";
+import useModal from "../../Component/Modal/UseModal";
+
 const headerTitle = [
   {
-    title: "نام و نام خانوادگی",
-    field: "UserName",
+    title: "نام",
+    field: "Name",
+  },
+  {
+    title: "نام خانوادکی",
+    field: "LastName",
   },
   {
     title: "شماره تماس",
-    field: "PhoneNum",
+    field: "PhoneNumber",
   },
 ];
 
@@ -29,63 +29,62 @@ class UserInfo {
       this[item] = data[item];
     }
   }
+  get id() {
+    return this.userId;
+  }
 }
-const GetUnitData = async (id) => {
-  return await axios.get(BaseAPIUrl + `BaseInfo/Apartment/${id}`);
-};
 
 const Users = () => {
-  const addUser = (data) => 
-  {
-    axios.post(BaseAPIUrl + "baseinfo/expense", JSON.stringify(data),
-    {headers:{'Content-Type' : 'text/json' }});
-  }
-  const deleteCost = (data) => 
-  {
-    axios.delete(BaseAPIUrl + "baseinfo/expense", JSON.stringify(data),
-    {headers:{'Content-Type' : 'text/json' }});
-  }
-  const [editData, setEditData] = useState({ isActive: false, unitId: null });
-  const [deleteData, setDeleteData] = useState({
-    isActive: false,
-    unitId: null,
-  });
 
-  const editToggle = () =>
-    setEditData({ ...editData, isActive: !editData.isActive });
-  const deleteToggle = () =>
-    setDeleteData({ ...deleteData, isActive: !deleteData.isActive });
-  const handleDelete = (unitId) => {
-    setDeleteData({
-      isActive: true,
-      unitId: unitId,
-    });
-  };
-  const handleEdit = (unitId) => {
-    setEditData({
-      isActive: true,
-      unitId: unitId,
-    });
-  };
+  const [user, setUser] = useState([]);
+  const [modalState, toggleModal, getModalData] = useModal([
+    "add",
+    "edit",
+    "delete",
+  ]);
 
+  useEffect(async () => {
+    const { data: user } = await GetData("BaseInfo/Expense");
+    setUser(user);
+  }, [modalState]);
   return (
     <>
       <ATable
         tableTitle="لیست افراد ساختمان"
-        rows={userInfo.map((c) => new UserInfo(c, handleEdit, handleDelete))}
+        rows={user.map((c) => new UserInfo(c))}
         headers={headerTitle}
         actions={[
-          { icon: "fas fa-edit", onClick: handleEdit },
-          { icon: "fa fa-trash", onClick: handleDelete },
+          { icon: "fas fa-edit", onClick: (id) => toggleModal("edit", id) },
+          { icon: "fa fa-trash", onClick: (id) => toggleModal("delete", id) },
         ]}
       >
-        <AModal buttonLabel="ایجاد عضو جدید">
-        <UserForm onSubmit={addUser}></UserForm>
-        </AModal>
-        <UnControlledModal toggle={editToggle} modal={editData.isActive}>
-          <UserForm data={userInfo[0]}></UserForm>
-        </UnControlledModal>
+       <Button
+          className="mx-2 p-2"
+          color="danger"
+          onClick={() => toggleModal("add")}
+        >
+          ایجاد عضو
+        </Button>
       </ATable>
+      <FormModal
+        Form={UserForm}
+        toggle={() => toggleModal("add")}
+        data={getModalData("add")}
+        mode={formMode.add}
+      />
+      <FormModal
+        Form={UserForm}
+        toggle={() => toggleModal("edit")}
+        data={getModalData("edit")}
+        mode={formMode.edit}
+      />
+      <FormModal
+        Form={DeleteForm}
+        url="BaseInfo/Expense"
+        toggle={() => toggleModal("delete")}
+        data={getModalData("delete")}
+        mode={formMode.delete}
+      />
     </>
   );
 };

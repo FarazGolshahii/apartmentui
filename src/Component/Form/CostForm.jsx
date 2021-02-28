@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
-// reactstrap components
+import { GetData } from "../../Services/ApiServices";
+import generateText from "../../Utility/FormButtonGenerator";
+import { NetDatetime } from "../../Utility/NETUtility";
+import formMode from "./FormConfig";
+import useFormData from "./UseFormData";
 import {
   Card,
   CardHeader,
@@ -8,55 +11,61 @@ import {
   FormGroup,
   Form,
   Input,
-  InputGroup,
   Row,
   Col,
   Label,
-  Button
+  Button,
 } from "reactstrap";
-import BaseAPIUrl from "../../View/APIConfig";
 
 
+const formDataTemplate = {
+  expenseId: null,
+  title: null,
+  expenseCategoryId: null,
+  amount: null,
+  from: null,
+  to: null,
+};
 
-const CostForm = ({ data, onSubmit }) => {
-  
-  
-  const [formData, setFormData] = useState(
-    data
-      ? data
-      : {
-          expenseId: null,
-          title: null,
-          expenseCategoryId: null,
-          price: null,
-          from: null,
-          to: null,
-        }
-  );
+const CostForm = ({ url = "BaseInfo/Expense", data, mode, onSuccess }) => {
+  const [categories, setCategories] = useState([]);
+  const [formData, handleChange, handleSubmit, setFormData] = useFormData({
+    mode: mode,
+    data: formDataTemplate,
+    onSuccess: onSuccess,
+    url,
+  });
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    onSubmit(formData);
-  }
+  const prepareFormConstants = async () => {
+    let { data: categoryList } = await GetData("Baseinfo/Expense/Category");
+    setCategories(categoryList);
+    const newFormData = { ...formData };
+    newFormData.expenseCategoryId = categoryList[0]
+      ? categoryList[0].expensCategoryId
+      : null;
+    setFormData(newFormData);
 
-  const handleChange = (event) => {
-    const newData = { ...formData };
-    newData[event.target.name] = event.target.value;
-    setFormData(newData);
-    console.log(formData);
+    if (mode == formMode.edit) {
+      const { data: cost } = await GetData(url + `/${data}`);
+      cost.from = NetDatetime(cost.from);
+      cost.to = NetDatetime(cost.to);
+      setFormData(cost);
+    }
   };
 
+  useEffect(prepareFormConstants, []);
+  const formLabel = generateText(mode);
   return (
     <>
       <Card className=" border-0">
         <CardHeader className="bg-transparent">
           <div className="text-muted text-center">
-            <Label>ایجاد هزینه جدید</Label>
+            <Label>{formLabel} هزینه</Label>
           </div>
         </CardHeader>
         <CardBody>
           <Form role="form" onSubmit={handleSubmit}>
-            <input name="expenseId" value={formData.expenseId} hidden/>
+            <input name="expenseId" value={formData.expenseId} hidden />
             <Row className="item-center ">
               <Col>
                 <div className="text-right text-muted">
@@ -78,17 +87,17 @@ const CostForm = ({ data, onSubmit }) => {
                 </div>
                 <Input
                   type="number"
-                  name="price"
+                  name="amount"
                   step="10000"
                   placeholder="مبلغ (ریال)"
-                  value={formData.price}
+                  value={formData.amount}
                   onChange={handleChange}
                 />
               </Col>
               <Col>
                 <FormGroup>
                   <div className="text-right text-muted">
-                    <small>نحوه محاسبه هزینه:</small>
+                    <small>گروه هزینه:</small>
                   </div>
                   <Input
                     type="select"
@@ -96,11 +105,11 @@ const CostForm = ({ data, onSubmit }) => {
                     value={formData.expenseCategoryId}
                     onChange={handleChange}
                   >
-                    <option>نحوه محاسبه</option>
-                    <option value="1">بر اساس متراژ</option>
-                    <option value="2">بر اساس نفرات</option>
-                    <option value="3">بر اساس متراژ و نفرات</option>
-                    <option value="0">بر اساس مقدار ثابت</option>
+                    {categories.map((c) => (
+                      <option value={c.expensCategoryId}>
+                        {c.expensCategoryName}
+                      </option>
+                    ))}
                   </Input>
                 </FormGroup>
               </Col>
@@ -134,8 +143,8 @@ const CostForm = ({ data, onSubmit }) => {
               </Row>
             </FormGroup>
             <Button color="secondary" className="mt-2">
-              اضافه کردن
-          </Button>
+              {formLabel}
+            </Button>
           </Form>
         </CardBody>
       </Card>
