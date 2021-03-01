@@ -3,6 +3,7 @@ import React from "react";
 import { Card, CardHeader, CardBody, Form, Label, Button } from "reactstrap";
 import { DeleteData } from "../../Services/ApiServices";
 import generateText from "../../Utility/FormButtonGenerator";
+import PageVariable from "../../variable";
 import formMode from "./FormConfig";
 
 const DeleteForm = ({ url, data, onSuccess }) => {
@@ -19,12 +20,10 @@ const DeleteForm = ({ url, data, onSuccess }) => {
       <Card className=" border-0">
         <CardHeader className="bg-transparent">
           <div className="text-muted text-center">
-<<<<<<< HEAD
-            <Label>آیااز {formLabel} مطمعن هستید؟</Label>
-=======
-            <Label>{formLabel}</Label>
-            <Label>آیا مطمعن هستید؟</Label>
->>>>>>> b3fed793b94346f67b0c7440c47654461e3da64e
+            <Label>
+              {PageVariable.DeleteForm.text1} {formLabel}{" "}
+              {PageVariable.DeleteForm.text2}
+            </Label>
           </div>
         </CardHeader>
         <CardBody>

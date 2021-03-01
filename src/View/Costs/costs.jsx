@@ -2,34 +2,30 @@ import { useEffect, useState } from "react";
 import CostForm from "../../Component/Form/CostForm";
 import CostCategoryForm from "../../Component/Form/CostCategoryForm";
 import ATable from "../../Component/Table/Table";
-<<<<<<< HEAD
-import { GetData} from "../../Services/ApiServices";
-=======
-import UnControlledModal from "../../Component/Modal/UncontrolledModal";
-import { DeleteData, GetData, PostData } from "../../Services/ApiServices";
->>>>>>> b3fed793b94346f67b0c7440c47654461e3da64e
+import { GetData } from "../../Services/ApiServices";
 import formMode from "../../Component/Form/FormConfig";
 import { NetDatetime } from "../../Utility/NETUtility";
 import useModal from "../../Component/Modal/UseModal";
 import { Button } from "reactstrap";
 import FormModal from "../../Component/Modal/FormModal";
 import DeleteForm from "../../Component/Form/DeleteForm";
+import PageVariable from "../../variable";
 
 const headerTitle = [
   {
-    title: "نام هزینه",
+    title: PageVariable.Costs.headerTitle.title,
     field: "title",
   },
   {
-    title: "گروه",
+    title: PageVariable.Costs.headerTitle.expenseCategoryName,
     field: "expenseCategoryName",
   },
   {
-    title: "مبلغ",
+    title: PageVariable.Costs.headerTitle.amount,
     field: "amount",
   },
   {
-    title: "بازه موثر پرداخت",
+    title: PageVariable.Costs.headerTitle.liveDate,
     field: "liveDate",
   },
 ];
@@ -65,7 +61,7 @@ const Costs = () => {
   return (
     <>
       <ATable
-        tableTitle="لیست هزینه ها"
+        tableTitle={PageVariable.Costs.tableTitle}
         rows={costs.map((c) => new CostInfo(c))}
         headers={headerTitle}
         actions={[
@@ -74,33 +70,18 @@ const Costs = () => {
         ]}
       >
         <Button
-<<<<<<< HEAD
           className="mx-2 p-2"
           color="danger"
           onClick={() => toggleModal("addCategory")}
         >
-          ایجاد گروه هزینه
+          {PageVariable.Costs.addCategoryButton}
         </Button>
         <Button
           className="mx-2 p-2"
           color="danger"
           onClick={() => toggleModal("add")}
         >
-          ایجاد هزینه
-=======
-          className="mx-2"
-          color="danger"
-          onClick={() => toggleModal("add")}
-        >
-          افزودن هزینه
-        </Button>
-        <Button
-          className="mx-2"
-          color="danger"
-          onClick={() => toggleModal("addCategory")}
-        >
-          افزودن گروه هزینه
->>>>>>> b3fed793b94346f67b0c7440c47654461e3da64e
+          {PageVariable.Costs.addCostButton}
         </Button>
       </ATable>
       <FormModal

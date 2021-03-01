@@ -1,6 +1,6 @@
 import ATable from "../../Component/Table/Table";
-const Dashboard = () => {
+const Building = () => {
   return <></>;
 };
 
-export default Dashboard;
+export default Building;

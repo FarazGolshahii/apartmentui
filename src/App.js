@@ -7,7 +7,8 @@ import Units from "./View/Units/units";
 import Costs from "./View/Costs/costs";
 import Header from "./Component/Header/Header";
 import Users from "./View/Users/Users";
-import OwnerTenent from "./View/OwnerTenent/OwnerTenent";
+import Building from "./View/Building/Building";
+import PageVariable from "./variable";
 function App() {
   return (
     <Container fluid className="h-100 p-0">
@@ -16,11 +17,11 @@ function App() {
           <Sidebar />
         </Col>
         <Col className="p-0">
-          <Header brandText={"سیستم مدیریت شارژ ساختمان"}></Header>
+          <Header brandText={PageVariable.BuildingInfo.BuildingName}></Header>
 
           <Route path="/dashboard" component={Dashboard} />
           <Route path="/units" component={Units} />
-          <Route path="/units/Ownet&Tenent" component={OwnerTenent} />
+          <Route path="Building" component={Building} />
           <Route path="/costs" component={Costs} />
           <Route path="/Users" component={Users} />
         </Col>

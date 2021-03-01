@@ -4,53 +4,55 @@ import Costs from "./Costs/costs";
 import Bill from "./Bill/bill";
 import History from "./History/History";
 import Users from "./Users/Users";
-import OwnerTenent from "./OwnerTenent/OwnerTenent";
+import Building from "./Building/Building";
+import PageVariable from "../variable";
+
 const routes = [
   {
     path: "/dashboard",
-    name: "داشبورد",
+    name: PageVariable.Routers.Dashboard,
     icon: "fas fa-home",
     component: Dashboard,
     layout: "/admin",
   },
   {
     path: "/units",
-    name: "واحد ها",
+    name: PageVariable.Routers.Unit,
     icon: "fas fa-building",
     component: Units,
     layout: "/admin",
   },
-  // {
-  //   path: "/Owner&Tenent",
-  //   name: "اطلاعات مالکین و ساکنین",
-  //   icon: "",
-  //   component: OwnerTenent,
-  //   layout: "/admin",
-  // },
+  {
+    path: "/Building",
+    name: PageVariable.Routers.Building,
+    icon: "fas fa-building",
+    component: Building,
+    layout: "/admin",
+  },
   {
     path: "/costs",
-    name: "هزینه ها",
+    name: PageVariable.Routers.Costs,
     icon: "fas fa-money-bill",
     component: Costs,
     layout: "/admin",
   },
   {
     path: "/bill",
-    name: "صورتحساب / پرداخت",
+    name: PageVariable.Routers.Bill,
     icon: "	fa fa-credit-card",
     component: Bill,
     layout: "/admin",
   },
   {
     path: "/Users",
-    name: "اعضای ساختمان",
+    name: PageVariable.Routers.Users,
     icon: "fa fa-users",
     component: Users,
     layout: "/admin",
   },
   {
     path: "/History",
-    name: "تاریخچه",
+    name: PageVariable.Routers.History,
     icon: "fa fa-history",
     component: History,
     layout: "/admin",

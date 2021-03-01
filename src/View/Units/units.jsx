@@ -2,7 +2,6 @@ import ATable from "../../Component/Table/Table";
 import AModal from "../../Component/Modal/modal";
 import UnitForm from "../../Component/Form/UnitForm";
 import UnControlledModal from "../../Component/Modal/UncontrolledModal";
-<<<<<<< HEAD
 import { useEffect, useState } from "react";
 import { GetData, PostData } from "../../Services/ApiServices";
 import formMode from "../../Component/Form/FormConfig";
@@ -11,36 +10,33 @@ import { Button } from "reactstrap";
 import FormModal from "../../Component/Modal/FormModal";
 import useModal from "../../Component/Modal/UseModal";
 import { NetDatetime } from "../../Utility/NETUtility";
-=======
-import { useState } from "react";
-import { PostData } from "../../Services/ApiServices";
->>>>>>> b3fed793b94346f67b0c7440c47654461e3da64e
+import PageVariable from "../../variable";
 
 const headerTitle = [
   {
-    title: "شماره واحد",
+    title: PageVariable.Units.headerTitle.unitNumber,
     field: "unitNumber",
   },
   {
-    title: "متراژ",
+    title: PageVariable.Units.headerTitle.area,
     field: "area",
   },
   {
-    title: "نام مالک",
+    title: PageVariable.Units.headerTitle.ownerName,
     field: "ownerName",
   },
   {
-    title: "نام ساکن",
+    title: PageVariable.Units.headerTitle.tenantName,
     field: "tenantName",
   },
   {
-    title: "تاریخ شروع/پایان مالکیت",
+    title: PageVariable.Units.headerTitle.ownerLiveDate,
     field: "ownerLiveDate",
   },
   {
-    title: "تاریخ شروع/پایان سکونت",
+    title: PageVariable.Units.headerTitle.tenantLiveDate,
     field: "tenantLiveDate",
-  }
+  },
 ];
 
 class UnitInfo {
@@ -61,45 +57,12 @@ class UnitInfo {
 }
 
 const Units = () => {
-<<<<<<< HEAD
   const [units, setUnits] = useState([]);
   const [modalState, toggleModal, getModalData] = useModal([
     "add",
     "edit",
     "delete",
   ]);
-=======
-  const addUnit = (data) => 
-  {
-    PostData("baseinfo/expense", JSON.stringify(data));
-  }
-  const deleteUnit = (data) => 
-  {
-    deleteData("baseinfo/expense", JSON.stringify(data));
-  }
-  const [enterData, setEnterData] = useState({ isActive: false, unitId: null });
-  const [deleteData, setDeleteData] = useState({
-    isActive: false,
-    unitId: null,
-  });
-
-  const enterToggle = () =>
-    setEnterData({ ...enterData, isActive: !enterData.isActive });
-  const deleteToggle = () =>
-    setDeleteData({ ...deleteData, isActive: !deleteData.isActive });
-  const handleDelete = (unitId) => {
-    setDeleteData({
-      isActive: true,
-      unitId: unitId,
-    });
-  };
-  const handleEnter = (unitId) => {
-    setEnterData({
-      isActive: true,
-      unitId: unitId,
-    });
-  };
->>>>>>> b3fed793b94346f67b0c7440c47654461e3da64e
 
   useEffect(async () => {
     const { data: units } = await GetData("BaseInfo/Expense");
@@ -108,7 +71,7 @@ const Units = () => {
   return (
     <>
       <ATable
-        tableTitle="لیست واحد ها"
+        tableTitle={PageVariable.Units.tableTitle}
         rows={units.map((c) => new UnitInfo(c))}
         headers={headerTitle}
         actions={[
@@ -121,7 +84,7 @@ const Units = () => {
           color="danger"
           onClick={() => toggleModal("add")}
         >
-          ایجاد واحد
+          {PageVariable.Units.addUnitButton}
         </Button>
       </ATable>
       <FormModal

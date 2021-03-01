@@ -12,6 +12,7 @@ import {
   Label,
   Button,
 } from "reactstrap";
+import PageVariable from "../../variable";
 import formMode from "./FormConfig";
 import useFormData from "./UseFormData";
 
@@ -34,7 +35,7 @@ const CostCategoryForm = ({ onSuccess }) => {
       <Card className=" border-0">
         <CardHeader className="bg-transparent">
           <div className="text-muted text-center">
-            <Label>ایجاد هزینه جدید</Label>
+            <Label>{PageVariable.CostCategoryForm.headerTitle}</Label>
           </div>
         </CardHeader>
         <CardBody>
@@ -48,26 +49,28 @@ const CostCategoryForm = ({ onSuccess }) => {
               <Col>
                 <FormGroup>
                   <div className="text-right text-muted">
-                    <small>نام هزینه:</small>
+                    <small>
+                      {PageVariable.CostCategoryForm.expensCategoryName}
+                    </small>
                   </div>
                   <Input
                     type="text"
                     name="expensCategoryName"
-                    placeholder="نام گروه هزینه"
+                    placeholder={PageVariable.CostCategoryForm.placeholder}
                     value={formData.expensCategoryName}
                     onChange={handleChange}
                   />
                 </FormGroup>
               </Col>
-<<<<<<< HEAD
-=======
-            </Row>
-            <Row>
->>>>>>> b3fed793b94346f67b0c7440c47654461e3da64e
               <Col>
                 <FormGroup>
                   <div className="text-right text-muted">
-                    <small>نحوه محاسبه هزینه:</small>
+                    <small>
+                      {
+                        PageVariable.CostCategoryForm.formulaType
+                          .formulaTypeTitle
+                      }
+                    </small>
                   </div>
                   <Input
                     type="select"
@@ -75,17 +78,27 @@ const CostCategoryForm = ({ onSuccess }) => {
                     value={formData.formulaType}
                     onChange={handleChange}
                   >
-                    <option>نحوه محاسبه</option>
-                    <option value={1}>بر اساس متراژ</option>
-                    <option value={2}>بر اساس نفرات</option>
-                    <option value={3}>بر اساس متراژ و نفرات</option>
-                    <option value={0}>بر اساس مقدار ثابت</option>
+                    <option>
+                      {PageVariable.CostCategoryForm.formulaType.formulaType}
+                    </option>
+                    <option value={1}>
+                      {PageVariable.CostCategoryForm.formulaType.formulaType1}
+                    </option>
+                    <option value={2}>
+                      {PageVariable.CostCategoryForm.formulaType.formulaType2}
+                    </option>
+                    <option value={3}>
+                      {PageVariable.CostCategoryForm.formulaType.formulaType3}
+                    </option>
+                    <option value={0}>
+                      {PageVariable.CostCategoryForm.formulaType.formulaType0}
+                    </option>
                   </Input>
                 </FormGroup>
               </Col>
             </Row>
             <Button color="secondary" className="mt-2">
-              اضافه کردن
+              {PageVariable.CostCategoryForm.submitButton}
             </Button>
           </Form>
         </CardBody>

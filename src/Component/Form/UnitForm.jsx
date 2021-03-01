@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 import React, { useEffect, useState } from "react";
-=======
-import React, { useState } from "react";
->>>>>>> b3fed793b94346f67b0c7440c47654461e3da64e
 import {
   Card,
   CardHeader,
@@ -14,22 +10,20 @@ import {
   Col,
   Label,
   Button,
-<<<<<<< HEAD
   FormGroup,
-=======
->>>>>>> b3fed793b94346f67b0c7440c47654461e3da64e
 } from "reactstrap";
 import { GetData } from "../../Services/ApiServices";
 import generateText from "../../Utility/FormButtonGenerator";
 import { NetDatetime } from "../../Utility/NETUtility";
+import PageVariable from "../../variable";
 import formMode from "./FormConfig";
 import useFormData from "./UseFormData";
 
-<<<<<<< HEAD
 const formDataTemplate = {
   unitId: null,
   unitNumber: null,
   area: null,
+  occupantcount: null,
   ownerName: null,
   tenantName: null,
   ownerFrom: null,
@@ -60,75 +54,41 @@ const UnitForm = ({ url = "BaseInfo/Expense", data, mode, onSuccess }) => {
     <Card className=" border-0">
       <CardHeader className="bg-transparent">
         <div className="text-muted text-center">
-          <Label>{formLabel} واحد </Label>
+          <Label>
+            {formLabel} {PageVariable.UnitForm.unit}
+          </Label>
         </div>
       </CardHeader>
       <CardBody>
         <Form role="form">
           <input name="expenseId" value={formData.unitId} hidden />
           <FormGroup>
-=======
-const UnitForm = ({ data, onSubmit }) => {
-  const [formData, setFormData] = useState(
-    data
-      ? data
-      : {
-          unitId: null,
-          unitNum: null,
-          area: null,
-        }
-  );
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    onSubmit(formData);
-  };
-
-  const handleChange = (event) => {
-    const newData = { ...formData };
-    newData[event.target.name] = event.target.value;
-    setFormData(newData);
-    console.log(formData);
-  };
-
-  return (
-    <>
-      <Card className=" border-0">
-        <CardHeader className="bg-transparent">
-          <div className="text-muted text-center">
-            <Label>ایجاد واحد جدید</Label>
-          </div>
-        </CardHeader>
-        <CardBody>
-          <Form role="form">
-            <input name="expenseId" value={formData.unitId} hidden />
->>>>>>> b3fed793b94346f67b0c7440c47654461e3da64e
             <Row>
               <Col>
                 <div className="text-right text-muted">
-                  <small>شماره واحد:</small>
+                  <small>{PageVariable.UnitForm.unitNumber.headerTitle}</small>
                 </div>
                 <InputGroup>
                   <Input
-                    name="unitNum"
-                    placeholder="شماره واحد"
+                    name="unitNumber"
+                    placeholder={PageVariable.UnitForm.unitNumber.placeholder}
                     min={1}
                     max={100}
                     type="number"
                     step="1"
-                    value={formData.unitNum}
+                    value={formData.unitNumber}
                     onChange={handleChange}
                   />
                 </InputGroup>
               </Col>
               <Col>
                 <div className="text-right text-muted">
-                  <small>متراژ:</small>
+                  <small>{PageVariable.UnitForm.area.headerTitle}</small>
                 </div>
                 <InputGroup>
                   <Input
                     name="area"
-                    placeholder="متراژ"
+                    placeholder={PageVariable.UnitForm.area.placeholder}
                     min={20}
                     type="number"
                     step="5"
@@ -142,12 +102,12 @@ const UnitForm = ({ data, onSubmit }) => {
           <Row>
             <Col xl="6" md="4" sm="3">
               <div className="text-right text-muted">
-                <small>نام مالک:</small>
+                <small>{PageVariable.UnitForm.ownerName.headerTitle}</small>
               </div>
               <InputGroup>
                 <Input
                   name="ownerName"
-                  placeholder="مالک را انتخاب کنید"
+                  placeholder={PageVariable.UnitForm.ownerName.placeholder}
                   type="text"
                   value={formData.ownerName}
                   onChange={handleChange}
@@ -159,7 +119,7 @@ const UnitForm = ({ data, onSubmit }) => {
             <Row>
               <Col>
                 <div className="text-right text-muted">
-                  <small>تاریخ شروع بازه مالکیت:</small>
+                  <small>{PageVariable.UnitForm.ownerLiveDate.fromTitle}</small>
                 </div>
                 <Input
                   type="date"
@@ -170,7 +130,7 @@ const UnitForm = ({ data, onSubmit }) => {
               </Col>
               <Col>
                 <div className="text-right text-muted">
-                  <small>تاریخ پایان بازه مالکیت:</small>
+                  <small>{PageVariable.UnitForm.ownerLiveDate.toTitle}</small>
                 </div>
                 <Input
                   type="date"
@@ -182,20 +142,20 @@ const UnitForm = ({ data, onSubmit }) => {
             </Row>
           </FormGroup>
           <Row>
-          <Label check className="text-right text-muted rtl float-right">
-            <Input type="checkbox" className="pr-3" /> ساکن و مالک واحد دو فرد
-            مختلف هستند.
-          </Label>
+            <Label check className="text-right text-muted rtl float-right">
+              <Input type="checkbox" />
+              {PageVariable.UnitForm.checkboxTitle}
+            </Label>
           </Row>
           <Row>
             <Col xl="6" md="4" sm="3">
               <div className="text-right text-muted">
-                <small>نام ساکن:</small>
+                <small>{PageVariable.UnitForm.tenantName.headerTitle}</small>
               </div>
               <InputGroup>
                 <Input
                   name="tenantName"
-                  placeholder="ساکن را انتخاب کنید"
+                  placeholder={PageVariable.UnitForm.tenantName.placeholder}
                   type="text"
                   value={formData.tenantName}
                   onChange={handleChange}
@@ -207,7 +167,9 @@ const UnitForm = ({ data, onSubmit }) => {
             <Row>
               <Col>
                 <div className="text-right text-muted">
-                  <small>تاریخ شروع بازه سکونت:</small>
+                  <small>
+                    {PageVariable.UnitForm.tenantLiveDate.fromTitle}
+                  </small>
                 </div>
                 <Input
                   type="date"
@@ -218,7 +180,7 @@ const UnitForm = ({ data, onSubmit }) => {
               </Col>
               <Col>
                 <div className="text-right text-muted">
-                  <small>تاریخ پایان بازه سکونت:</small>
+                  <small>{PageVariable.UnitForm.tenantLiveDate.toTitle}</small>
                 </div>
                 <Input
                   type="date"
@@ -230,7 +192,7 @@ const UnitForm = ({ data, onSubmit }) => {
             </Row>
           </FormGroup>
           <Button color="secondary" className="mt-2">
-            اضافه کردن
+            {PageVariable.UnitForm.addButton}
           </Button>
         </Form>
       </CardBody>

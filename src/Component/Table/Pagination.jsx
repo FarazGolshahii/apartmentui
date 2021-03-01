@@ -8,7 +8,7 @@ const APagination = () => {
       <PaginationItem className="disabled">
         <PaginationLink href="#pablo" onClick={(e) => e.preventDefault()}>
           <i className="fas fa-angle-right" />
-          <span className="sr-only">Next</span>
+          <span className="sr-only"></span>
         </PaginationLink>
       </PaginationItem>
       <PaginationItem>
@@ -18,7 +18,7 @@ const APagination = () => {
           tabIndex="-1"
         >
           <i className="fas fa-angle-left" />
-          <span className="sr-only">Previous</span>
+          <span className="sr-only"></span>
         </PaginationLink>
       </PaginationItem>
     </Pagination>

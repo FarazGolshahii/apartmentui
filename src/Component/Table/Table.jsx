@@ -6,6 +6,7 @@ import {
   Container,
   Row,
 } from "reactstrap";
+import PageVariable from "../../variable";
 import APagination from "./Pagination";
 import "./Table.css";
 
@@ -28,7 +29,7 @@ const ATable = ({ headers, tableTitle, rows, actions, children }) => {
                     {headers.map((header) => (
                       <th scope="col">{header.title}</th>
                     ))}
-                    {actions ? <th>ویرایش / حذف</th> : null}
+                    {actions ? <th>{PageVariable.Table}</th> : null}
                   </tr>
                 </thead>
                 <tbody>

@@ -4,7 +4,6 @@ import generateText from "../../Utility/FormButtonGenerator";
 import { NetDatetime } from "../../Utility/NETUtility";
 import formMode from "./FormConfig";
 import useFormData from "./UseFormData";
-// reactstrap components
 import {
   Card,
   CardHeader,
@@ -12,23 +11,19 @@ import {
   FormGroup,
   Form,
   Input,
-  InputGroup,
   Row,
   Col,
   Label,
-  ButtonDropdown,
   Button,
 } from "reactstrap";
-import PageVariable from "../../variable";
 
 const formDataTemplate = {
-  userId: null,
+  BuildingId: null,
   Name: null,
-  LastName: null,
-  PhoneNumber: null,
+  NumberOfUnits: null,
 };
 
-const UserForm = ({ url = "BaseInfo/Expense", data, mode, onSuccess }) => {
+const BuildingForm = ({ url = "BaseInfo/Building", data, mode, onSuccess }) => {
   const [formData, handleChange, handleSubmit, setFormData] = useFormData({
     mode: mode,
     data: formDataTemplate,
@@ -42,53 +37,43 @@ const UserForm = ({ url = "BaseInfo/Expense", data, mode, onSuccess }) => {
       <Card className=" border-0">
         <CardHeader className="bg-transparent">
           <div className="text-muted text-center">
-            <Label>
-              {formLabel} {PageVariable.UserForm.user}
-            </Label>
+            <Label>{formLabel} ساختمان</Label>
           </div>
         </CardHeader>
         <CardBody>
           <Form role="form" onSubmit={handleSubmit}>
-            <input name="expenseId" value={formData.userId} hidden />
+            <input name="expenseId" value={formData.BuildingId} hidden />
             <Row className="item-center ">
               <Col>
                 <div className="text-right text-muted">
-                  <small>{PageVariable.UserForm.Name.headerTitle}</small>
+                  <small>نام ساختمان:</small>
                 </div>
                 <Input
                   type="text"
                   name="Name"
-                  placeholder={PageVariable.UserForm.Name.placeholder}
+                  placeholder="نام"
                   value={formData.Name}
                   onChange={handleChange}
                 />
               </Col>
+            </Row>
+            <Row className="item-center ">
               <Col>
                 <div className="text-right text-muted">
-                  <small>{PageVariable.UserForm.LastName.headerTitle}</small>
+                  <small>تعداد واحدها:</small>
                 </div>
                 <Input
-                  type="text"
-                  name="LastName"
-                  placeholder={PageVariable.UserForm.LastName.placeholder}
-                  value={formData.LastName}
+                  type="number"
+                  name="NumberOfUnits"
+                  step="1"
+                  min="2"
+                  placeholder="تعداد"
+                  value={formData.NumberOfUnits}
                   onChange={handleChange}
                 />
               </Col>
             </Row>
-            <Col>
-              <div className="text-right text-muted">
-                <small>{PageVariable.UserForm.PhoneNumber.headerTitle}</small>
-              </div>
-              <Input
-                type="text"
-                name="PhoneNumber"
-                placeholder={PageVariable.UserForm.PhoneNumber.placeholder}
-                value={formData.PhoneNumber}
-                onChange={handleChange}
-              />
-            </Col>
-            <Button color="secondary" className="mt-3">
+            <Button color="secondary" className="mt-2">
               {formLabel}
             </Button>
           </Form>
@@ -98,4 +83,4 @@ const UserForm = ({ url = "BaseInfo/Expense", data, mode, onSuccess }) => {
   );
 };
 
-export default UserForm;
+export default BuildingForm;

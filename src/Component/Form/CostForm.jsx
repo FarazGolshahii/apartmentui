@@ -1,13 +1,9 @@
 import React, { useEffect, useState } from "react";
-<<<<<<< HEAD
 import { GetData } from "../../Services/ApiServices";
 import generateText from "../../Utility/FormButtonGenerator";
 import { NetDatetime } from "../../Utility/NETUtility";
 import formMode from "./FormConfig";
 import useFormData from "./UseFormData";
-=======
-
->>>>>>> b3fed793b94346f67b0c7440c47654461e3da64e
 import {
   Card,
   CardHeader,
@@ -20,15 +16,7 @@ import {
   Label,
   Button,
 } from "reactstrap";
-<<<<<<< HEAD
-
-=======
-import { GetData } from "../../Services/ApiServices";
-import generateText from "../../Utility/FormButtonGenerator";
-import { NetDatetime } from "../../Utility/NETUtility";
-import formMode from "./FormConfig";
-import useFormData from "./UseFormData";
->>>>>>> b3fed793b94346f67b0c7440c47654461e3da64e
+import PageVariable from "../../variable";
 
 const formDataTemplate = {
   expenseId: null,
@@ -72,7 +60,9 @@ const CostForm = ({ url = "BaseInfo/Expense", data, mode, onSuccess }) => {
       <Card className=" border-0">
         <CardHeader className="bg-transparent">
           <div className="text-muted text-center">
-            <Label>{formLabel} هزینه</Label>
+            <Label>
+              {formLabel} {PageVariable.CostForm.cost}
+            </Label>
           </div>
         </CardHeader>
         <CardBody>
@@ -81,12 +71,12 @@ const CostForm = ({ url = "BaseInfo/Expense", data, mode, onSuccess }) => {
             <Row className="item-center ">
               <Col>
                 <div className="text-right text-muted">
-                  <small>نام هزینه:</small>
+                  <small>{PageVariable.CostForm.title.headerTitle}</small>
                 </div>
                 <Input
                   type="text"
                   name="title"
-                  placeholder="نام هزینه"
+                  placeholder={PageVariable.CostForm.title.placeholder}
                   value={formData.title}
                   onChange={handleChange}
                 />
@@ -95,13 +85,13 @@ const CostForm = ({ url = "BaseInfo/Expense", data, mode, onSuccess }) => {
             <Row className="item-center ">
               <Col>
                 <div className="text-right text-muted">
-                  <small>مبلغ:</small>
+                  <small>{PageVariable.CostForm.amount.headerTitle}</small>
                 </div>
                 <Input
                   type="number"
                   name="amount"
                   step="10000"
-                  placeholder="مبلغ (ریال)"
+                  placeholder={PageVariable.CostForm.amount.placeholder}
                   value={formData.amount}
                   onChange={handleChange}
                 />
@@ -109,7 +99,9 @@ const CostForm = ({ url = "BaseInfo/Expense", data, mode, onSuccess }) => {
               <Col>
                 <FormGroup>
                   <div className="text-right text-muted">
-                    <small>گروه هزینه:</small>
+                    <small>
+                      {PageVariable.CostForm.expenseCategoryId.headerTitle}
+                    </small>
                   </div>
                   <Input
                     type="select"
@@ -130,7 +122,7 @@ const CostForm = ({ url = "BaseInfo/Expense", data, mode, onSuccess }) => {
               <Row>
                 <Col>
                   <div className="text-right text-muted">
-                    <small>تاریخ شروع بازه پرداخت:</small>
+                    <small>{PageVariable.CostForm.liveDate.fromTitle}</small>
                   </div>
                   <Input
                     type="date"
@@ -142,7 +134,7 @@ const CostForm = ({ url = "BaseInfo/Expense", data, mode, onSuccess }) => {
                 </Col>
                 <Col>
                   <div className="text-right text-muted">
-                    <small>تاریخ پایان بازه پرداخت:</small>
+                    <small>{PageVariable.CostForm.liveDate.toTitle}</small>
                   </div>
                   <Input
                     type="date"

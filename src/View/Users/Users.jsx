@@ -2,28 +2,24 @@ import { useEffect, useState } from "react";
 import ATable from "../../Component/Table/Table";
 import UserForm from "../../Component/Form/UserForm";
 import { DeleteData, GetData, PostData } from "../../Services/ApiServices";
-<<<<<<< HEAD
 import formMode from "../../Component/Form/FormConfig";
 import DeleteForm from "../../Component/Form/DeleteForm";
 import FormModal from "../../Component/Modal/FormModal";
 import { Button } from "reactstrap";
 import useModal from "../../Component/Modal/UseModal";
+import PageVariable from "../../variable";
 
 const headerTitle = [
-=======
-
-const userInfo = [
->>>>>>> b3fed793b94346f67b0c7440c47654461e3da64e
   {
-    title: "نام",
+    title: PageVariable.Users.headerTitle.Name,
     field: "Name",
   },
   {
-    title: "نام خانوادکی",
+    title: PageVariable.Users.headerTitle.LastName,
     field: "LastName",
   },
   {
-    title: "شماره تماس",
+    title: PageVariable.Users.headerTitle.PhoneNumber,
     field: "PhoneNumber",
   },
 ];
@@ -38,30 +34,8 @@ class UserInfo {
     return this.userId;
   }
 }
-<<<<<<< HEAD
 
 const Users = () => {
-=======
-const GetUnitData = async (id) => {
-  return await GetData(`BaseInfo/Apartment/${id}`);
-};
-
-const Users = () => {
-  const addUser = (data) => 
-  {
-    PostData("baseinfo/expense", JSON.stringify(data));
-  }
-  const deleteCost = (data) => 
-  {
-    DeleteData("baseinfo/expense", JSON.stringify(data));
-  }
-  const [editData, setEditData] = useState({ isActive: false, unitId: null });
-  const [deleteData, setDeleteData] = useState({
-    isActive: false,
-    unitId: null,
-  });
->>>>>>> b3fed793b94346f67b0c7440c47654461e3da64e
-
   const [user, setUser] = useState([]);
   const [modalState, toggleModal, getModalData] = useModal([
     "add",
@@ -76,7 +50,7 @@ const Users = () => {
   return (
     <>
       <ATable
-        tableTitle="لیست افراد ساختمان"
+        tableTitle={PageVariable.Users.tableTitle}
         rows={user.map((c) => new UserInfo(c))}
         headers={headerTitle}
         actions={[
@@ -84,12 +58,12 @@ const Users = () => {
           { icon: "fa fa-trash", onClick: (id) => toggleModal("delete", id) },
         ]}
       >
-       <Button
+        <Button
           className="mx-2 p-2"
           color="danger"
           onClick={() => toggleModal("add")}
         >
-          ایجاد عضو
+          {PageVariable.Users.addUserButton}
         </Button>
       </ATable>
       <FormModal
