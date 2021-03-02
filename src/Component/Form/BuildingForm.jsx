@@ -18,9 +18,9 @@ import {
 } from "reactstrap";
 
 const formDataTemplate = {
-  BuildingId: null,
-  Name: null,
-  NumberOfUnits: null,
+  buildingId: null,
+  name: null,
+  apartmentCount: null,
 };
 
 const BuildingForm = ({ url = "BaseInfo/Building", data, mode, onSuccess }) => {
@@ -42,7 +42,7 @@ const BuildingForm = ({ url = "BaseInfo/Building", data, mode, onSuccess }) => {
         </CardHeader>
         <CardBody>
           <Form role="form" onSubmit={handleSubmit}>
-            <input name="expenseId" value={formData.BuildingId} hidden />
+            <input name="expenseId" value={formData.buildingId} hidden />
             <Row className="item-center ">
               <Col>
                 <div className="text-right text-muted">
@@ -50,30 +50,29 @@ const BuildingForm = ({ url = "BaseInfo/Building", data, mode, onSuccess }) => {
                 </div>
                 <Input
                   type="text"
-                  name="Name"
-                  placeholder="نام"
-                  value={formData.Name}
+                  name="name"
+                  placeholder="نام ساختمان"
+                  value={formData.name}
                   onChange={handleChange}
                 />
               </Col>
-            </Row>
-            <Row className="item-center ">
               <Col>
                 <div className="text-right text-muted">
                   <small>تعداد واحدها:</small>
                 </div>
                 <Input
+                  disabled={mode === formMode.edit}
                   type="number"
-                  name="NumberOfUnits"
+                  name="apartmentCount"
                   step="1"
                   min="2"
-                  placeholder="تعداد"
-                  value={formData.NumberOfUnits}
+                  placeholder="تعداد واحدها"
+                  value={formData.apartmentCount}
                   onChange={handleChange}
                 />
               </Col>
             </Row>
-            <Button color="secondary" className="mt-2">
+            <Button color="secondary" className="mt-3">
               {formLabel}
             </Button>
           </Form>

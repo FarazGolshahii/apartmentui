@@ -7,14 +7,14 @@ const useModal = (names) => {
 
   const toggleModal = (name, data) => {
     const newModalStates = modalState.map((m) => {
-      if (m.name == name)
+      if (m.name === name)
         return { name: m.name, isActive: !m.isActive, data: data };
       return m;
     });
     setModalState(newModalStates);
   };
 
-  const getModalData = (name) => modalState.find((m) => m.name == name);
+  const getModalData = (name) => modalState.find((m) => m.name === name);
 
   return [modalState, toggleModal, getModalData];
 };

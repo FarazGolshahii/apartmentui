@@ -1,9 +1,12 @@
 import routes from "../../View/Routes";
 import { NavLink } from "react-router-dom";
-import { Col, NavbarBrand, Row } from "reactstrap";
+import { Col, Row } from "reactstrap";
+import Buildings from "../../View/Building/Building";
+
 const Sidebar = () => {
   return (
-    <div className="navbar-light bg-white h-100 shadow pt-5 p-1">
+    <div className="navbar-light bg-white h-100 shadow pt-2 p-1">
+      <Buildings></Buildings>
       {routes.map((route) => (
         <div>
           <NavLink

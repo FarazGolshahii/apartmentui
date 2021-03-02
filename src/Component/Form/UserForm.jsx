@@ -28,7 +28,7 @@ const formDataTemplate = {
   PhoneNumber: null,
 };
 
-const UserForm = ({ url = "BaseInfo/Expense", data, mode, onSuccess }) => {
+const UserForm = ({ url = "BaseInfo/Person", data, mode, onSuccess }) => {
   const [formData, handleChange, handleSubmit, setFormData] = useFormData({
     mode: mode,
     data: formDataTemplate,

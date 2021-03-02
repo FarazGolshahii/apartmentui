@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import {
+  Collapse,
   Card,
   CardHeader,
   CardBody,
@@ -38,18 +39,22 @@ const UnitForm = ({ url = "BaseInfo/Expense", data, mode, onSuccess }) => {
     onSuccess: onSuccess,
     url,
   });
-  // const prepareFormConstants = async () => {
-  //   if (mode == formMode.edit) {
-  //     const { data: unit } = await GetData(url + `/${data}`);
-  //     unit.ownerFrom = NetDatetime(unit.ownerFrom);
-  //     unit.ownerTo = NetDatetime(unit.ownerTo);
-  //     unit.tenantFrom = NetDatetime(unit.tenantFrom);
-  //     unit.tenantTo = NetDatetime(unit.tenantTo);
-  //     setFormData(unit);
-  //   }
-  // };
-  // useEffect(prepareFormConstants, []);
+  const prepareFormConstants = async () => {
+    if (mode == formMode.edit) {
+      const { data: unit } = await GetData(url + `/${data}`);
+      unit.ownerFrom = NetDatetime(unit.from);
+      unit.ownerTo = NetDatetime(unit.to);
+      unit.tenantFrom = NetDatetime(unit.tenantFrom);
+      unit.tenantTo = NetDatetime(unit.tenantTo);
+      setFormData(unit);
+    }
+  };
+  useEffect(prepareFormConstants, []);
   const formLabel = generateText(mode);
+
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggle = () => setIsOpen(!isOpen);
   return (
     <Card className=" border-0">
       <CardHeader className="bg-transparent">
@@ -141,56 +146,90 @@ const UnitForm = ({ url = "BaseInfo/Expense", data, mode, onSuccess }) => {
               </Col>
             </Row>
           </FormGroup>
-          <Row>
-            <Label check className="text-right text-muted rtl float-right">
-              <Input type="checkbox" />
-              {PageVariable.UnitForm.checkboxTitle}
-            </Label>
-          </Row>
-          <Row>
-            <Col xl="6" md="4" sm="3">
-              <div className="text-right text-muted">
-                <small>{PageVariable.UnitForm.tenantName.headerTitle}</small>
-              </div>
-              <InputGroup>
-                <Input
-                  name="tenantName"
-                  placeholder={PageVariable.UnitForm.tenantName.placeholder}
-                  type="text"
-                  value={formData.tenantName}
-                  onChange={handleChange}
-                />
-              </InputGroup>
-            </Col>
-          </Row>
-          <FormGroup>
+
+          <div>
             <Row>
-              <Col>
-                <div className="text-right text-muted">
-                  <small>
-                    {PageVariable.UnitForm.tenantLiveDate.fromTitle}
-                  </small>
-                </div>
-                <Input
-                  type="date"
-                  name="tenantFrom"
-                  value={formData.tenantFrom}
-                  onChange={handleChange}
-                />
+              <Col sm="1">
+                <Input id="acardion" type="checkbox" onClick={toggle} />
               </Col>
-              <Col>
-                <div className="text-right text-muted">
-                  <small>{PageVariable.UnitForm.tenantLiveDate.toTitle}</small>
-                </div>
-                <Input
-                  type="date"
-                  name="tenantTo"
-                  value={formData.tenantTo}
-                  onChange={handleChange}
-                />
+              <Col sm="11" className="text-right">
+                <Label check className="text-right text-muted" for="acardion">
+                  {PageVariable.UnitForm.checkboxTitle}
+                </Label>
               </Col>
             </Row>
-          </FormGroup>
+            <Collapse isOpen={isOpen}>
+              <Row>
+                <Col xl="6" md="4" sm="3">
+                  <div className="text-right text-muted">
+                    <small>
+                      {PageVariable.UnitForm.tenantName.headerTitle}
+                    </small>
+                  </div>
+                  <InputGroup>
+                    <Input
+                      name="tenantName"
+                      placeholder={PageVariable.UnitForm.tenantName.placeholder}
+                      type="text"
+                      value={formData.tenantName}
+                      onChange={handleChange}
+                    />
+                  </InputGroup>
+                </Col>
+                <Col>
+                  <div className="text-right text-muted">
+                    <small>
+                      {PageVariable.UnitForm.occupantcount.headerTitle}
+                    </small>
+                  </div>
+                  <InputGroup>
+                    <Input
+                      name="occupantcount"
+                      placeholder={
+                        PageVariable.UnitForm.occupantcount.placeholder
+                      }
+                      min={1}
+                      type="number"
+                      step="1"
+                      value={formData.a}
+                      onChange={handleChange}
+                    />
+                  </InputGroup>
+                </Col>
+              </Row>
+              <FormGroup>
+                <Row>
+                  <Col>
+                    <div className="text-right text-muted">
+                      <small>
+                        {PageVariable.UnitForm.tenantLiveDate.fromTitle}
+                      </small>
+                    </div>
+                    <Input
+                      type="date"
+                      name="tenantFrom"
+                      value={formData.tenantFrom}
+                      onChange={handleChange}
+                    />
+                  </Col>
+                  <Col>
+                    <div className="text-right text-muted">
+                      <small>
+                        {PageVariable.UnitForm.tenantLiveDate.toTitle}
+                      </small>
+                    </div>
+                    <Input
+                      type="date"
+                      name="tenantTo"
+                      value={formData.tenantTo}
+                      onChange={handleChange}
+                    />
+                  </Col>
+                </Row>
+              </FormGroup>
+            </Collapse>
+          </div>
+
           <Button color="secondary" className="mt-2">
             {PageVariable.UnitForm.addButton}
           </Button>

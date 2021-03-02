@@ -23,13 +23,6 @@ const routes = [
     layout: "/admin",
   },
   {
-    path: "/Building",
-    name: PageVariable.Routers.Building,
-    icon: "fas fa-building",
-    component: Building,
-    layout: "/admin",
-  },
-  {
     path: "/costs",
     name: PageVariable.Routers.Costs,
     icon: "fas fa-money-bill",

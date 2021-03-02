@@ -44,7 +44,7 @@ const Users = () => {
   ]);
 
   useEffect(async () => {
-    const { data: user } = await GetData("BaseInfo/Expense");
+    const { data: user } = await GetData("BaseInfo/Person");
     setUser(user);
   }, [modalState]);
   return (

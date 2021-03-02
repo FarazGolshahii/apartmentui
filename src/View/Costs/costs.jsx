@@ -57,7 +57,6 @@ const Costs = () => {
     const { data: costs } = await GetData("BaseInfo/Expense");
     setCosts(costs);
   }, [modalState]);
-
   return (
     <>
       <ATable

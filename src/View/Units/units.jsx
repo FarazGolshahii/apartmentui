@@ -30,6 +30,10 @@ const headerTitle = [
     field: "tenantName",
   },
   {
+    title: PageVariable.Units.headerTitle.occupantcount,
+    field: "occupantcount",
+  },
+  {
     title: PageVariable.Units.headerTitle.ownerLiveDate,
     field: "ownerLiveDate",
   },
@@ -76,7 +80,6 @@ const Units = () => {
         headers={headerTitle}
         actions={[
           { icon: "fas fa-edit", onClick: (id) => toggleModal("edit", id) },
-          { icon: "fa fa-trash", onClick: (id) => toggleModal("delete", id) },
         ]}
       >
         <Button

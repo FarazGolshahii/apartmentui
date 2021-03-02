@@ -1,0 +1,19 @@
+#grad {
+  height: 100%;
+  background: linear-gradient(
+    to right,
+    rgba(0, 174, 255, 0.616),
+    rgb(0, 174, 255)
+  );
+}
+
+.center-wrapper {
+  display: block;
+  width: 100%;
+  position: relative;
+}
+
+.centre {
+  padding: 200px;
+  padding-top: 300px;
+}

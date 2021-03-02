@@ -20,12 +20,19 @@ const PageVariable = {
     addCategoryButton: "ایجاد گروه هزینه",
     addCostButton: "ایجاد هزینه",
   },
+  Building: {
+    headerTitle: {
+      title: "نام هزینه",
+      UnitNumber: "تعداد واحدها",
+    },
+  },
   Units: {
     headerTitle: {
       unitNumber: "شماره واحد",
       area: "متراژ",
       ownerName: "نام مالک",
       tenantName: "نام ساکن",
+      occupantcount: "تعداد ساکنین",
       ownerLiveDate: "تاریخ شروع/پایان مالکیت",
       tenantLiveDate: "تاریخ شروع/پایان سکونت",
     },
@@ -84,6 +91,10 @@ const PageVariable = {
       headerTitle: "نام ساکن:",
       placeholder: "ساکن را انتخاب کنید",
     },
+    occupantcount: {
+      headerTitle: "تعداد ساکنین:",
+      placeholder: "تعداد",
+    },
     ownerLiveDate: {
       fromTitle: "تاریخ شروع بازه مالکیت:",
       toTitle: "تاریخ پایان بازه مالکیت:",
@@ -92,7 +103,7 @@ const PageVariable = {
       fromTitle: "تاریخ شروع بازه سکونت:",
       toTitle: "تاریخ پایان بازه سکونت:",
     },
-    checkboxTitle: "ساکن و مالک واحد دو فرد مختلف هستند.",
+    checkboxTitle: "واحد دارای ساکن است.",
     addButton: "اضافه کردن",
   },
   UserForm: {
@@ -108,6 +119,14 @@ const PageVariable = {
     PhoneNumber: {
       headerTitle: "شماره تماس:",
       placeholder: "شماره تماس",
+    },
+  },
+  BuildingForm: {
+    Building: "ساختمان",
+    Name: { headerTitle: "نام ساختمان:", placeholder: "نام ساختمان" },
+    NumberOfUnits: {
+      headerTitle: "تعداد واحدها:",
+      placeholder: "تعداد واحدها",
     },
   },
   Table: "ویرایش / حذف",
