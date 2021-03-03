@@ -23,9 +23,9 @@ import PageVariable from "../../variable";
 
 const formDataTemplate = {
   userId: null,
-  Name: null,
-  LastName: null,
-  PhoneNumber: null,
+  name: null,
+  lastName: null,
+  phoneNumber: null,
 };
 
 const UserForm = ({ url = "BaseInfo/Person", data, mode, onSuccess }) => {
@@ -49,7 +49,7 @@ const UserForm = ({ url = "BaseInfo/Person", data, mode, onSuccess }) => {
         </CardHeader>
         <CardBody>
           <Form role="form" onSubmit={handleSubmit}>
-            <input name="expenseId" value={formData.userId} hidden />
+            <input name="userId" value={formData.userId} hidden />
             <Row className="item-center ">
               <Col>
                 <div className="text-right text-muted">

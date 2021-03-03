@@ -10,6 +10,7 @@ import Users from "./View/Users/Users";
 import Login from "./View/LoginPage";
 import PageVariable from "./variable";
 import Bills from "./View/Bill/bill";
+import Calculate from "./View/Calculate/Calculate";
 function App() {
   return (
     <Container fluid className="h-100 p-0">
@@ -28,6 +29,7 @@ function App() {
               ></Header>
 
               <Route path="/dashboard" component={Dashboard} />
+              <Route path="/calculate" component={Calculate} />
               <Route path="/units" component={Units} />
               <Route path="/Bill" component={Bills} />
               <Route path="/costs" component={Costs} />

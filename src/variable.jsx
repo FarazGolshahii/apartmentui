@@ -5,9 +5,9 @@ const PageVariable = {
     Unit: "واحد ها",
     Building: "ساختمان",
     Costs: "هزینه ها",
+    Calculate: "محاسبه شارژ",
     Bill: "صورتحساب / پرداخت",
     Users: "اعضای ساختمان",
-    History: "تاریخچه",
   },
   Costs: {
     headerTitle: {
@@ -39,6 +39,7 @@ const PageVariable = {
     tableTitle: "لیست واحد ها",
     addUnitButton: "ایجاد واحد",
   },
+  Calculate: {},
   Users: {
     headerTitle: {
       Name: "نام",

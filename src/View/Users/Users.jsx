@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
 import ATable from "../../Component/Table/Table";
 import UserForm from "../../Component/Form/UserForm";
-import { DeleteData, GetData, PostData } from "../../Services/ApiServices";
+import { GetData } from "../../Services/ApiServices";
 import formMode from "../../Component/Form/FormConfig";
-import DeleteForm from "../../Component/Form/DeleteForm";
 import FormModal from "../../Component/Modal/FormModal";
 import { Button } from "reactstrap";
 import useModal from "../../Component/Modal/UseModal";
@@ -12,15 +11,15 @@ import PageVariable from "../../variable";
 const headerTitle = [
   {
     title: PageVariable.Users.headerTitle.Name,
-    field: "Name",
+    field: "name",
   },
   {
     title: PageVariable.Users.headerTitle.LastName,
-    field: "LastName",
+    field: "lastName",
   },
   {
     title: PageVariable.Users.headerTitle.PhoneNumber,
-    field: "PhoneNumber",
+    field: "phoneNumber",
   },
 ];
 
@@ -30,6 +29,9 @@ class UserInfo {
       this[item] = data[item];
     }
   }
+  // get liveDate() {
+  //   return this.Name + " " + this.LastName;
+  // }
   get id() {
     return this.userId;
   }
@@ -55,7 +57,6 @@ const Users = () => {
         headers={headerTitle}
         actions={[
           { icon: "fas fa-edit", onClick: (id) => toggleModal("edit", id) },
-          { icon: "fa fa-trash", onClick: (id) => toggleModal("delete", id) },
         ]}
       >
         <Button
@@ -77,13 +78,6 @@ const Users = () => {
         toggle={() => toggleModal("edit")}
         data={getModalData("edit")}
         mode={formMode.edit}
-      />
-      <FormModal
-        Form={DeleteForm}
-        url="BaseInfo/Expense"
-        toggle={() => toggleModal("delete")}
-        data={getModalData("delete")}
-        mode={formMode.delete}
       />
     </>
   );

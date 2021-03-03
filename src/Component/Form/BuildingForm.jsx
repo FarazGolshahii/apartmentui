@@ -42,7 +42,7 @@ const BuildingForm = ({ url = "BaseInfo/Building", data, mode, onSuccess }) => {
         </CardHeader>
         <CardBody>
           <Form role="form" onSubmit={handleSubmit}>
-            <input name="expenseId" value={formData.buildingId} hidden />
+            <input name="buildingId" value={formData.buildingId} hidden />
             <Row className="item-center ">
               <Col>
                 <div className="text-right text-muted">
