@@ -26,7 +26,7 @@ const formDataTemplate = {
   unitNumber: null,
   area: null,
   occupantcount: null,
-  personId: null,
+  onwerId: null,
   tenantId: null,
   ownerFrom: null,
   ownerTo: null,
@@ -116,44 +116,25 @@ const UnitForm = ({ url = "BaseInfo/Expense", data, mode, onSuccess }) => {
               </Col>
             </Row>
           </FormGroup>
-          {/* <Row>
+          <Row>
             <Col xl="6" md="4" sm="3">
-              <div className="text-right text-muted">
-                <small>{PageVariable.UnitForm.ownerName.headerTitle}</small>
-              </div>
-              <InputGroup>
-                <Input
-                  type="select"
-                  name="personId"
-                  value={formData.personId}
-                  onChange={handleChange}
-                >
-                  {persons.map((c) => (
-                    <option value={c.personId}>
-                      {c.name + " " + c.lastName}
-                    </option>
-                  ))}
-                </Input>
-              </InputGroup>
-            </Col>
-          </Row> */}
-          <Col>
-            <FormGroup>
               <div className="text-right text-muted">
                 <small>{PageVariable.UnitForm.ownerName.headerTitle}</small>
               </div>
               <Input
                 type="select"
-                name="ownerName"
-                value={formData.ownerName}
+                name="ownerId"
+                value={formData.ownerId}
                 onChange={handleChange}
               >
-                {categories.map((c) => (
-                  <option value={c.Name}>{c.Name}</option>
+                {persons.map((c) => (
+                  <option value={c.personId}>
+                    {c.name + " " + c.lastName}
+                  </option>
                 ))}
               </Input>
-            </FormGroup>
-          </Col>
+            </Col>
+          </Row>
           <FormGroup>
             <Row>
               <Col>
