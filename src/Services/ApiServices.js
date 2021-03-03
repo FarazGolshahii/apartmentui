@@ -29,6 +29,7 @@ export const PutData = async (url, data) =>
 
 export const GetData = async (url) =>
 {
+
     try 
     {
         const {data : result} = await axios.get(BaseAPIUrl + url);
@@ -36,6 +37,7 @@ export const GetData = async (url) =>
     }
     catch(e)
     {
+        
         alert(e);
         return undefined;
     }

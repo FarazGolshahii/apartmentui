@@ -14,6 +14,7 @@ import {
   FormGroup,
 } from "reactstrap";
 import { GetData } from "../../Services/ApiServices";
+import { GetPersons } from "../../Services/FormServices/UnitService";
 import generateText from "../../Utility/FormButtonGenerator";
 import { NetDatetime } from "../../Utility/NETUtility";
 import PageVariable from "../../variable";
@@ -25,8 +26,8 @@ const formDataTemplate = {
   unitNumber: null,
   area: null,
   occupantcount: null,
-  ownerName: null,
-  tenantName: null,
+  personId: null,
+  tenantId: null,
   ownerFrom: null,
   ownerTo: null,
   tenantFrom: null,
@@ -51,10 +52,14 @@ const UnitForm = ({ url = "BaseInfo/Expense", data, mode, onSuccess }) => {
   };
   useEffect(prepareFormConstants, []);
   const formLabel = generateText(mode);
-
+  const [persons, setPersons] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
-
   const toggle = () => setIsOpen(!isOpen);
+
+  useEffect(async () => {
+    let personData = await GetPersons();
+    setPersons(personData.data);
+  }, []);
   return (
     <Card className=" border-0">
       <CardHeader className="bg-transparent">
@@ -65,7 +70,7 @@ const UnitForm = ({ url = "BaseInfo/Expense", data, mode, onSuccess }) => {
         </div>
       </CardHeader>
       <CardBody>
-        <Form role="form">
+        <Form role="form" onSubmit={handleSubmit}>
           <input name="expenseId" value={formData.unitId} hidden />
           <FormGroup>
             <Row>
@@ -111,12 +116,17 @@ const UnitForm = ({ url = "BaseInfo/Expense", data, mode, onSuccess }) => {
               </div>
               <InputGroup>
                 <Input
-                  name="ownerName"
-                  placeholder={PageVariable.UnitForm.ownerName.placeholder}
-                  type="text"
-                  value={formData.ownerName}
+                  type="select"
+                  name="personId"
+                  value={formData.personId}
                   onChange={handleChange}
-                />
+                >
+                  {persons.map((c) => (
+                    <option value={c.personId}>
+                      {c.name + " " + c.lastName}
+                    </option>
+                  ))}
+                </Input>
               </InputGroup>
             </Col>
           </Row>
@@ -168,12 +178,17 @@ const UnitForm = ({ url = "BaseInfo/Expense", data, mode, onSuccess }) => {
                   </div>
                   <InputGroup>
                     <Input
-                      name="tenantName"
-                      placeholder={PageVariable.UnitForm.tenantName.placeholder}
-                      type="text"
-                      value={formData.tenantName}
+                      type="select"
+                      name="tenantId"
+                      value={formData.tenantId}
                       onChange={handleChange}
-                    />
+                    >
+                      {persons.map((c) => (
+                        <option value={c.personId}>
+                          {c.name + " " + c.lastName}
+                        </option>
+                      ))}
+                    </Input>
                   </InputGroup>
                 </Col>
                 <Col>
