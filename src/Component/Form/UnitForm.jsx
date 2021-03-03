@@ -34,7 +34,6 @@ const formDataTemplate = {
   tenantTo: null,
 };
 const UnitForm = ({ url = "BaseInfo/Expense", data, mode, onSuccess }) => {
-  const [categories, setCategories] = useState([]);
   const [formData, handleChange, handleSubmit, setFormData] = useFormData({
     mode: mode,
     data: formDataTemplate,
@@ -42,12 +41,6 @@ const UnitForm = ({ url = "BaseInfo/Expense", data, mode, onSuccess }) => {
     url,
   });
   const prepareFormConstants = async () => {
-    let { data: categoryList } = await GetData("BaseInfo/Person");
-    setCategories(categoryList);
-    const newFormData = { ...formData };
-    newFormData.Name = categoryList[0] ? categoryList[0].Name : null;
-    setFormData(newFormData);
-
     if (mode == formMode.edit) {
       const { data: unit } = await GetData(url + `/${data}`);
       unit.ownerFrom = NetDatetime(unit.from);
@@ -63,10 +56,7 @@ const UnitForm = ({ url = "BaseInfo/Expense", data, mode, onSuccess }) => {
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
 
-  useEffect(async () => {
-    let personData = await GetPersons();
-    setPersons(personData.data);
-  }, []);
+  useEffect(async () => setPersons(await GetPersons()), []);
   return (
     <Card className=" border-0">
       <CardHeader className="bg-transparent">

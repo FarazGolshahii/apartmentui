@@ -7,6 +7,7 @@ import useModal from "../../Component/Modal/UseModal";
 import ATable from "../../Component/Table/Table";
 import { GetData } from "../../Services/ApiServices";
 import PageVariable from "../../variable";
+import { ReadBuidling } from "../../Services/StorageServces/LocalStorageService";
 const headerTitle = [
   {
     title: PageVariable.Building.headerTitle.title,
@@ -33,14 +34,14 @@ const Buildings = () => {
   const [building, setBuilding] = useState({});
   const [modalState, toggleModal, getModalData] = useModal(["edit"]);
   useEffect(async () => {
-    const { data: buildings } = await GetData("BaseInfo/Building");
-    setBuilding(buildings[0]);
+    const buildings = await GetData("BaseInfo/Building");
+    setBuilding(buildings.find((b) => b.buildingId === +ReadBuidling()));
   }, [modalState]);
 
   return (
     <div className="mb-4">
       <div className="text-center">
-        <Label className="mt-2"> {building.buildingName} </Label>
+        <Label className="mt-2"> {building.name} </Label>
         <Button
           className="btn btn-primary float-left btn pb-0 pr-2 pl-2 pt-1 d-inline-block mt-2 ml-3 "
           onClick={() => toggleModal("edit")}

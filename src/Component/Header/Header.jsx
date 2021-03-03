@@ -1,4 +1,4 @@
-import { Container, Navbar } from "react-bootstrap";
+import { Container, Navbar } from "reactstrap";
 
 const Header = (props) => {
   return (

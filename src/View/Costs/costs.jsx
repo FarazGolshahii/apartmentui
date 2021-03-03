@@ -54,7 +54,7 @@ const Costs = () => {
   ]);
 
   useEffect(async () => {
-    const { data: costs } = await GetData("BaseInfo/Expense");
+    const costs = await GetData("BaseInfo/Expense");
     setCosts(costs);
   }, [modalState]);
   return (

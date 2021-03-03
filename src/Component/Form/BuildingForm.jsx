@@ -1,14 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { GetData } from "../../Services/ApiServices";
 import generateText from "../../Utility/FormButtonGenerator";
-import { NetDatetime } from "../../Utility/NETUtility";
 import formMode from "./FormConfig";
 import useFormData from "./UseFormData";
 import {
   Card,
   CardHeader,
   CardBody,
-  FormGroup,
   Form,
   Input,
   Row,
@@ -16,6 +13,17 @@ import {
   Label,
   Button,
 } from "reactstrap";
+import {
+  ReadBuidling,
+  WriteBuilding,
+} from "../../Services/StorageServces/LocalStorageService";
+import { GetData } from "../../Services/ApiServices";
+
+const formInputNames = {
+  buildingId: "buildingId",
+  name: "name",
+  apartmentCount: "apartmentCount",
+};
 
 const formDataTemplate = {
   buildingId: null,
@@ -23,13 +31,31 @@ const formDataTemplate = {
   apartmentCount: null,
 };
 
-const BuildingForm = ({ url = "BaseInfo/Building", data, mode, onSuccess }) => {
+const BuildingForm = ({ url = "BaseInfo/Building", mode, onSuccess }) => {
+  const handleSuccess = (data) => {
+    WriteBuilding(+data.buildingId);
+    onSuccess();
+  };
+
+  const validator = (name, value) => {
+    if (name === formInputNames.apartmentCount) return value >= 2;
+    if (name === formInputNames.name) return value !== "";
+    return true;
+  };
+
   const [formData, handleChange, handleSubmit, setFormData] = useFormData({
     mode: mode,
     data: formDataTemplate,
-    onSuccess: onSuccess,
+    onSuccess: mode == formMode.add ? handleSuccess : onSuccess,
     url,
+    validator,
   });
+  useEffect(async () => {
+    if (mode === formMode.edit) {
+      const buildings = await GetData("BaseInfo/Building");
+      setFormData(buildings.find((b) => b.buildingId === +ReadBuidling()));
+    }
+  }, []);
 
   const formLabel = generateText(mode);
   return (
@@ -42,7 +68,11 @@ const BuildingForm = ({ url = "BaseInfo/Building", data, mode, onSuccess }) => {
         </CardHeader>
         <CardBody>
           <Form role="form" onSubmit={handleSubmit}>
-            <input name="buildingId" value={formData.buildingId} hidden />
+            <input
+              name={formInputNames.buildingId}
+              value={formData.buildingId}
+              hidden
+            />
             <Row className="item-center ">
               <Col>
                 <div className="text-right text-muted">
@@ -50,7 +80,7 @@ const BuildingForm = ({ url = "BaseInfo/Building", data, mode, onSuccess }) => {
                 </div>
                 <Input
                   type="text"
-                  name="name"
+                  name={formInputNames.name}
                   placeholder="نام ساختمان"
                   value={formData.name}
                   onChange={handleChange}
@@ -63,7 +93,7 @@ const BuildingForm = ({ url = "BaseInfo/Building", data, mode, onSuccess }) => {
                 <Input
                   disabled={mode === formMode.edit}
                   type="number"
-                  name="apartmentCount"
+                  name={formInputNames.apartmentCount}
                   step="1"
                   min="2"
                   placeholder="تعداد واحدها"

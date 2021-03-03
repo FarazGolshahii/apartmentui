@@ -10,8 +10,12 @@ import { Button } from "reactstrap";
 import { GetData } from "../../Services/ApiServices";
 const headerTitle = [
   {
+    title: "تاریخ محاسبه",
+    field: "calculate",
+  },
+  {
     title: "بازه محاسبه شده",
-    field: "liveDate",
+    field: "span",
   },
 ];
 
@@ -21,8 +25,11 @@ class CalculateInfo {
       this[item] = data[item];
     }
   }
-  get liveDate() {
-    return this.from + " تا " + this.to;
+  get span() {
+    return NetDatetime(this.from) + " تا " + NetDatetime(this.to);
+  }
+  get calculate() {
+    return NetDatetime(this.calculateDateTime);
   }
 }
 const Calculate = () => {
@@ -30,7 +37,7 @@ const Calculate = () => {
   const [modalState, toggleModal, getModalData] = useModal(["add"]);
 
   useEffect(async () => {
-    const { data: calculate } = await GetData("Charge/Calculation");
+    const calculate = await GetData("Charge/Calculation/All");
     setCalculate(calculate);
   }, [modalState]);
   return (

@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
-import "argon-dashboard-react/src/assets/scss/argon-dashboard-react.scss";
+import "./Assets/css/argon-dashboard-react.min.css";
 import "./App.css";
 import { BrowserRouter } from "react-router-dom";
 

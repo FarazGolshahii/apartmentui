@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Form } from "react-bootstrap";
+import { Form } from "reactstrap";
 import {
   Button,
   Card,
@@ -12,9 +12,10 @@ import {
   Row,
 } from "reactstrap";
 import useFormData from "../../Component/Form/UseFormData";
+import { ReadBuidling } from "../../Services/StorageServces/LocalStorageService";
 import generateText from "../../Utility/FormButtonGenerator";
 const formDataTemplate = {
-  buildingId: null,
+  buildingId: +ReadBuidling(),
   from: null,
   to: null,
 };

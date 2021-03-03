@@ -37,7 +37,7 @@ const CostForm = ({ url = "BaseInfo/Expense", data, mode, onSuccess }) => {
   });
 
   const prepareFormConstants = async () => {
-    let { data: categoryList } = await GetData("Baseinfo/Expense/Category");
+    let categoryList = await GetData("Baseinfo/Expense/Category");
     setCategories(categoryList);
     const newFormData = { ...formData };
     newFormData.expenseCategoryId = categoryList[0]
@@ -57,101 +57,99 @@ const CostForm = ({ url = "BaseInfo/Expense", data, mode, onSuccess }) => {
   const formLabel = generateText(mode);
   return (
     <>
-      <Card>
-        <CardHeader className="bg-transparent">
-          <div className="text-muted text-center">
-            <Label>
-              {formLabel} {PageVariable.CostForm.cost}
-            </Label>
-          </div>
-        </CardHeader>
-        <CardBody>
-          <Form role="form" onSubmit={handleSubmit}>
-            <input name="expenseId" value={formData.expenseId} hidden />
-            <Row className="item-center ">
-              <Col>
+      <CardHeader className="bg-transparent">
+        <div className="text-muted text-center">
+          <Label>
+            {formLabel} {PageVariable.CostForm.cost}
+          </Label>
+        </div>
+      </CardHeader>
+      <CardBody>
+        <Form role="form" onSubmit={handleSubmit}>
+          <input name="expenseId" value={formData.expenseId} hidden />
+          <Row className="item-center ">
+            <Col>
+              <div className="text-right text-muted">
+                <small>{PageVariable.CostForm.title.headerTitle}</small>
+              </div>
+              <Input
+                type="text"
+                name="title"
+                placeholder={PageVariable.CostForm.title.placeholder}
+                value={formData.title}
+                onChange={handleChange}
+              />
+            </Col>
+          </Row>
+          <Row className="item-center ">
+            <Col>
+              <div className="text-right text-muted">
+                <small>{PageVariable.CostForm.amount.headerTitle}</small>
+              </div>
+              <Input
+                type="number"
+                name="amount"
+                step="10000"
+                placeholder={PageVariable.CostForm.amount.placeholder}
+                value={formData.amount}
+                onChange={handleChange}
+              />
+            </Col>
+            <Col>
+              <FormGroup>
                 <div className="text-right text-muted">
-                  <small>{PageVariable.CostForm.title.headerTitle}</small>
+                  <small>
+                    {PageVariable.CostForm.expenseCategoryId.headerTitle}
+                  </small>
                 </div>
                 <Input
-                  type="text"
-                  name="title"
-                  placeholder={PageVariable.CostForm.title.placeholder}
-                  value={formData.title}
+                  type="select"
+                  name="expenseCategoryId"
+                  value={formData.expenseCategoryId}
+                  onChange={handleChange}
+                >
+                  {categories.map((c) => (
+                    <option value={c.expensCategoryId}>
+                      {c.expensCategoryName}
+                    </option>
+                  ))}
+                </Input>
+              </FormGroup>
+            </Col>
+          </Row>
+          <FormGroup>
+            <Row>
+              <Col>
+                <div className="text-right text-muted">
+                  <small>{PageVariable.CostForm.liveDate.fromTitle}</small>
+                </div>
+                <Input
+                  type="date"
+                  name="from"
+                  id="from"
+                  value={formData.from}
+                  onChange={handleChange}
+                />
+              </Col>
+              <Col>
+                <div className="text-right text-muted">
+                  <small>{PageVariable.CostForm.liveDate.toTitle}</small>
+                </div>
+                <Input
+                  type="date"
+                  name="to"
+                  id="to"
+                  value={formData.to}
                   onChange={handleChange}
                 />
               </Col>
             </Row>
-            <Row className="item-center ">
-              <Col>
-                <div className="text-right text-muted">
-                  <small>{PageVariable.CostForm.amount.headerTitle}</small>
-                </div>
-                <Input
-                  type="number"
-                  name="amount"
-                  step="10000"
-                  placeholder={PageVariable.CostForm.amount.placeholder}
-                  value={formData.amount}
-                  onChange={handleChange}
-                />
-              </Col>
-              <Col>
-                <FormGroup>
-                  <div className="text-right text-muted">
-                    <small>
-                      {PageVariable.CostForm.expenseCategoryId.headerTitle}
-                    </small>
-                  </div>
-                  <Input
-                    type="select"
-                    name="expenseCategoryId"
-                    value={formData.expenseCategoryId}
-                    onChange={handleChange}
-                  >
-                    {categories.map((c) => (
-                      <option value={c.expensCategoryId}>
-                        {c.expensCategoryName}
-                      </option>
-                    ))}
-                  </Input>
-                </FormGroup>
-              </Col>
-            </Row>
-            <FormGroup>
-              <Row>
-                <Col>
-                  <div className="text-right text-muted">
-                    <small>{PageVariable.CostForm.liveDate.fromTitle}</small>
-                  </div>
-                  <Input
-                    type="date"
-                    name="from"
-                    id="from"
-                    value={formData.from}
-                    onChange={handleChange}
-                  />
-                </Col>
-                <Col>
-                  <div className="text-right text-muted">
-                    <small>{PageVariable.CostForm.liveDate.toTitle}</small>
-                  </div>
-                  <Input
-                    type="date"
-                    name="to"
-                    id="to"
-                    value={formData.to}
-                    onChange={handleChange}
-                  />
-                </Col>
-              </Row>
-            </FormGroup>
-            <Button color="secondary" className="mt-2">
-              {formLabel}
-            </Button>
-          </Form>
-        </CardBody>
-      </Card>
+          </FormGroup>
+          <Button color="secondary" className="mt-2">
+            {formLabel}
+          </Button>
+        </Form>
+      </CardBody>
     </>
   );
 };

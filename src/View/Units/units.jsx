@@ -11,6 +11,7 @@ import FormModal from "../../Component/Modal/FormModal";
 import useModal from "../../Component/Modal/UseModal";
 import { NetDatetime } from "../../Utility/NETUtility";
 import PageVariable from "../../variable";
+import { ReadBuidling } from "../../Services/StorageServces/LocalStorageService";
 
 const headerTitle = [
   {
@@ -31,7 +32,7 @@ const headerTitle = [
   },
   {
     title: PageVariable.Units.headerTitle.occupantcount,
-    field: "occupantcount",
+    field: "occupantCount",
   },
   {
     title: PageVariable.Units.headerTitle.ownerLiveDate,
@@ -44,24 +45,41 @@ const headerTitle = [
 ];
 
 class UnitInfo {
-  constructor(data) {
-    for (let item in data) {
-      this[item] = data[item];
+  constructor(data, persons) {
+    this.id = data.apartment.apartmentId;
+    this.unitNumber = data.apartment.number;
+    this.area = data.apartment.area;
+    this.occupantCount = data.apartment.occupantCount;
+    this.ownerName = "بدون مالک";
+    this.tenantName = "بدون ساکن";
+    if (data.owner) {
+      const owner = persons.find((p) => p.personId === data.owner.personId);
+      this.ownerName = owner ? owner.name + " " + owner.lastname : "-";
+      this.ownerFrom = data.owner.from;
+      this.ownerTo = data.owner.to;
+    }
+    if (data.tenant) {
+      const tenant = persons.find((p) => p.personId === data.tenant.personId);
+      this.tenantName = tenant ? tenant.name + " " + tenant.lastname : "-";
+      this.tenantFrom = data.tenant.from;
+      this.tenantTo = data.tenant.to;
     }
   }
-  // get ownerLiveDate() {
-  //   return NetDatetime(this.ownerFrom) + " تا " + NetDatetime(this.ownerTo);
-  // }
-  // get tenantLiveDate() {
-  //   return NetDatetime(this.tenantFrom) + " تا " + NetDatetime(this.tenantTo);
-  // }
-  get id() {
-    return this.unitId;
+  get ownerLiveDate() {
+    return this.ownerFrom
+      ? NetDatetime(this.ownerFrom) + " تا " + NetDatetime(this.ownerTo)
+      : "بدون مالک";
+  }
+  get tenantLiveDate() {
+    return this.ownerFrom
+      ? NetDatetime(this.ownerFrom) + " تا " + NetDatetime(this.ownerTo)
+      : "بدون مالک";
   }
 }
 
 const Units = () => {
   const [units, setUnits] = useState([]);
+  const [persons, setPersons] = useState([]);
   const [modalState, toggleModal, getModalData] = useModal([
     "add",
     "edit",
@@ -69,14 +87,14 @@ const Units = () => {
   ]);
 
   useEffect(async () => {
-    const { data: units } = await GetData("BaseInfo/Expense");
-    setUnits(units);
+    setUnits(await GetData(`BaseInfo/Apartment/${1}`));
+    setPersons(await GetData("BaseInfo/Person"));
   }, [modalState]);
   return (
     <>
       <ATable
         tableTitle={PageVariable.Units.tableTitle}
-        rows={units.map((c) => new UnitInfo(c))}
+        rows={units.map((c) => new UnitInfo(c, persons))}
         headers={headerTitle}
         actions={[
           { icon: "fas fa-edit", onClick: (id) => toggleModal("edit", id) },

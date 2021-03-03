@@ -1,5 +1,7 @@
 import "@fortawesome/fontawesome-free/css/all.min.css";
-import { Container, Row, Col } from "react-bootstrap";
+import 'react-toastify/dist/ReactToastify.css';
+
+import { Container, Row, Col } from "reactstrap";
 import { Redirect, Route, Switch } from "react-router-dom";
 import Sidebar from "./Component/Sidebar/Sidebar";
 import Dashboard from "./View/Dashboard/dashboard";
@@ -11,6 +13,7 @@ import Login from "./View/LoginPage";
 import PageVariable from "./variable";
 import Bills from "./View/Bill/bill";
 import Calculate from "./View/Calculate/Calculate";
+import { toast, ToastContainer } from 'react-toastify';
 function App() {
   return (
     <Container fluid className="h-100 p-0">
@@ -38,6 +41,7 @@ function App() {
           </Row>
         </Route>
       </Switch>
+      <ToastContainer/>
     </Container>
   );
 }
