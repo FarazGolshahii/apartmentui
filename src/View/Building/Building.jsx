@@ -34,7 +34,7 @@ const Buildings = () => {
   const [modalState, toggleModal, getModalData] = useModal(["edit"]);
   useEffect(async () => {
     const { data: buildings } = await GetData("BaseInfo/Building");
-    setBuilding(buildings[0]);
+    setBuilding(buildings[23]);
   }, [modalState]);
 
   return (

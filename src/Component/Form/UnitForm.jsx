@@ -23,7 +23,7 @@ import useFormData from "./UseFormData";
 
 const formDataTemplate = {
   unitId: null,
-  unitNumber: null,
+  number: null,
   area: null,
   occupantcount: null,
   onwerId: null,
@@ -33,8 +33,7 @@ const formDataTemplate = {
   tenantFrom: null,
   tenantTo: null,
 };
-const UnitForm = ({ url = "BaseInfo/Expense", data, mode, onSuccess }) => {
-  const [categories, setCategories] = useState([]);
+const UnitForm = ({ url = "BaseInfo/Apartment", data, mode, onSuccess }) => {
   const [formData, handleChange, handleSubmit, setFormData] = useFormData({
     mode: mode,
     data: formDataTemplate,
@@ -42,12 +41,6 @@ const UnitForm = ({ url = "BaseInfo/Expense", data, mode, onSuccess }) => {
     url,
   });
   const prepareFormConstants = async () => {
-    let { data: categoryList } = await GetData("BaseInfo/Person");
-    setCategories(categoryList);
-    const newFormData = { ...formData };
-    newFormData.Name = categoryList[0] ? categoryList[0].Name : null;
-    setFormData(newFormData);
-
     if (mode == formMode.edit) {
       const { data: unit } = await GetData(url + `/${data}`);
       unit.ownerFrom = NetDatetime(unit.from);
@@ -87,13 +80,13 @@ const UnitForm = ({ url = "BaseInfo/Expense", data, mode, onSuccess }) => {
                 </div>
                 <InputGroup>
                   <Input
-                    name="unitNumber"
+                    name="number"
                     placeholder={PageVariable.UnitForm.unitNumber.placeholder}
                     min={1}
                     max={100}
                     type="number"
                     step="1"
-                    value={formData.unitNumber}
+                    value={formData.number}
                     onChange={handleChange}
                   />
                 </InputGroup>
@@ -211,7 +204,7 @@ const UnitForm = ({ url = "BaseInfo/Expense", data, mode, onSuccess }) => {
                       min={1}
                       type="number"
                       step="1"
-                      value={formData.a}
+                      value={formData.occupantcount}
                       onChange={handleChange}
                     />
                   </InputGroup>

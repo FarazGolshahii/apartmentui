@@ -5,12 +5,7 @@ import ATable from "../../Component/Table/Table";
 import { GetData } from "../../Services/ApiServices";
 import formMode from "../../Component/Form/FormConfig";
 import { NetDatetime } from "../../Utility/NETUtility";
-import useModal from "../../Component/Modal/UseModal";
-import { Button, Card, Container } from "reactstrap";
-import FormModal from "../../Component/Modal/FormModal";
-import DeleteForm from "../../Component/Form/DeleteForm";
-import PageVariable from "../../variable";
-import BillForm from "../../Component/Form/BillForm";
+
 const headerTitle = [
   {
     title: "شماره واحد",
@@ -36,12 +31,15 @@ class BillInfo {
     }
   }
   get liveDate() {
-    return NetDatetime(this.from) + " تا " + NetDatetime(this.to);
+    return NetDatetime(this.fromDate) + " تا " + NetDatetime(this.toDate);
   }
 }
 const Bills = () => {
   const [costs, setCosts] = useState([]);
-
+  useEffect(async () => {
+    const { data: costs } = await GetData("Charge/Calculation");
+    setCosts(costs);
+  }, []);
   return (
     <ATable
       tableTitle="صورتحساب"

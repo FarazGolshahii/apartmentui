@@ -15,7 +15,7 @@ import PageVariable from "../../variable";
 const headerTitle = [
   {
     title: PageVariable.Units.headerTitle.unitNumber,
-    field: "unitNumber",
+    field: "number",
   },
   {
     title: PageVariable.Units.headerTitle.area,
@@ -69,7 +69,7 @@ const Units = () => {
   ]);
 
   useEffect(async () => {
-    const { data: units } = await GetData("BaseInfo/Expense");
+    const { data: units } = await GetData("BaseInfo/Apartment/1");
     setUnits(units);
   }, [modalState]);
   return (
@@ -104,7 +104,7 @@ const Units = () => {
       />
       <FormModal
         Form={DeleteForm}
-        url="BaseInfo/Expense"
+        url="BaseInfo/Apartment"
         toggle={() => toggleModal("delete")}
         data={getModalData("delete")}
         mode={formMode.delete}
