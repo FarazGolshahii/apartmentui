@@ -37,7 +37,7 @@ class BillInfo {
 const Bills = () => {
   const [costs, setCosts] = useState([]);
   useEffect(async () => {
-    const { data: costs } = await GetData("Charge/Calculation");
+    const costs = await GetData("Charge/Calculation");
     setCosts(costs);
   }, []);
   return (

@@ -47,20 +47,20 @@ const headerTitle = [
 class UnitInfo {
   constructor(data, persons) {
     this.id = data.apartment.apartmentId;
-    this.unitNumber = data.apartment.number;
+    this.number = data.apartment.number;
     this.area = data.apartment.area;
     this.occupantCount = data.apartment.occupantCount;
     this.ownerName = "بدون مالک";
     this.tenantName = "بدون ساکن";
     if (data.owner) {
       const owner = persons.find((p) => p.personId === data.owner.personId);
-      this.ownerName = owner ? owner.name + " " + owner.lastname : "-";
+      this.ownerName = owner ? owner.name + " " + owner.lastName : "-";
       this.ownerFrom = data.owner.from;
       this.ownerTo = data.owner.to;
     }
     if (data.tenant) {
       const tenant = persons.find((p) => p.personId === data.tenant.personId);
-      this.tenantName = tenant ? tenant.name + " " + tenant.lastname : "-";
+      this.tenantName = tenant ? tenant.name + " " + tenant.lastName : "-";
       this.tenantFrom = data.tenant.from;
       this.tenantTo = data.tenant.to;
     }
@@ -71,20 +71,16 @@ class UnitInfo {
       : "بدون مالک";
   }
   get tenantLiveDate() {
-    return this.ownerFrom
-      ? NetDatetime(this.ownerFrom) + " تا " + NetDatetime(this.ownerTo)
-      : "بدون مالک";
+    return this.tenantFrom
+      ? NetDatetime(this.tenantFrom) + " تا " + NetDatetime(this.tenantTo)
+      : "بدون ساکن";
   }
 }
 
 const Units = () => {
   const [units, setUnits] = useState([]);
   const [persons, setPersons] = useState([]);
-  const [modalState, toggleModal, getModalData] = useModal([
-    "add",
-    "edit",
-    "delete",
-  ]);
+  const [modalState, toggleModal, getModalData] = useModal(["add", "edit"]);
 
   useEffect(async () => {
     setUnits(await GetData(`BaseInfo/Apartment/${ReadBuidling()}`));
@@ -119,13 +115,6 @@ const Units = () => {
         toggle={() => toggleModal("edit")}
         data={getModalData("edit")}
         mode={formMode.edit}
-      />
-      <FormModal
-        Form={DeleteForm}
-        url="BaseInfo/Apartment"
-        toggle={() => toggleModal("delete")}
-        data={getModalData("delete")}
-        mode={formMode.delete}
       />
     </>
   );

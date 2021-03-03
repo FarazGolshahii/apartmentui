@@ -13,8 +13,9 @@ import {
   Button,
   FormGroup,
 } from "reactstrap";
-import { GetData } from "../../Services/ApiServices";
+import { GetData, PostData, PutData } from "../../Services/ApiServices";
 import { GetPersons } from "../../Services/FormServices/UnitService";
+import { ReadBuidling } from "../../Services/StorageServces/LocalStorageService";
 import generateText from "../../Utility/FormButtonGenerator";
 import { NetDatetime } from "../../Utility/NETUtility";
 import PageVariable from "../../variable";
@@ -22,10 +23,10 @@ import formMode from "./FormConfig";
 import useFormData from "./UseFormData";
 
 const formDataTemplate = {
-  unitId: null,
+  apartmentId: null,
   number: null,
   area: null,
-  occupantcount: null,
+  occupantCount: null,
   onwerId: null,
   tenantId: null,
   ownerFrom: null,
@@ -41,16 +42,87 @@ const UnitForm = ({ url = "BaseInfo/Apartment", data, mode, onSuccess }) => {
     onSuccess: onSuccess,
     url,
   });
-  const prepareFormConstants = async () => {
-    if (mode == formMode.edit) {
-      const { data: unit } = await GetData(url + `/${data}`);
-      unit.ownerFrom = NetDatetime(unit.from);
-      unit.ownerTo = NetDatetime(unit.to);
-      unit.tenantFrom = NetDatetime(unit.tenantFrom);
-      unit.tenantTo = NetDatetime(unit.tenantTo);
-      setFormData(unit);
+
+  const unitHandleSubmit = async (e) => {
+    e.preventDefault();
+    if (mode === formMode.add) {
+      const apartmentForm = {
+        area: formData.area,
+        number: formData.number,
+        buildingId: +ReadBuidling(),
+      };
+
+      const apartment = await PostData("BaseInfo/Apartment", apartmentForm);
+
+      var ownerForm = {
+        from: formData.ownerFrom,
+        to: formData.ownerTo,
+        isOwner: true,
+        personId: formData.ownerId,
+        apartmentId: apartment.apartmentId,
+      };
+
+      await PostData("BaseInfo/Person/AddToUnit", ownerForm);
+
+      if (isOpen) {
+        var tenantForm = {
+          from: formData.tenantFrom,
+          to: formData.tenantTo,
+          isOwner: false,
+          occupantCount: formData.occupantCount,
+          personId: formData.tnantId,
+          apartmentId: apartment.apartmentId,
+        };
+
+        await PostData("BaseInfo/Person/AddToUnit", tenantForm);
+      }
+    }
+
+    if (mode === formMode.edit) {
+      var ownerForm = {
+        ownerTenantId: formData.ownerDataId,
+        from: formData.ownerFrom,
+        to: formData.ownerTo,
+        isOwner: true,
+      };
+
+      await PutData("BaseInfo/Person/EditOwnerTenant", ownerForm);
+
+      if (isOpen) {
+        var tenantForm = {
+          ownerTenantId: formData.tenantDataId,
+          from: formData.tenantFrom,
+          to: formData.tenantTo,
+          isOwner: false,
+          occupantCount: formData.occupantCount,
+        };
+
+        await PutData("BaseInfo/Person/EditOwnerTenant", tenantForm);
+      }
     }
   };
+
+  const prepareFormConstants = async () => {
+    if (mode == formMode.edit) {
+      const unitForm = { ...formData };
+      const unit = await GetData("BaseInfo/Apartment/Tenant" + `/${data}`);
+
+      unitForm.apartmentId = unit.apartment.apartmentId;
+      unitForm.area = unit.apartment.area;
+      unitForm.number = unit.apartment.number;
+      unitForm.occupantCount = unit.tenant.occupantCount;
+      unitForm.ownerDataId = unit.owner.ownerTenantId;
+      unitForm.ownerFrom = NetDatetime(unit.owner.from);
+      unitForm.ownerTo = NetDatetime(unit.owner.to);
+      unitForm.ownerId = unit.owner.personId;
+      unitForm.tenantDataId = unit.tenant.ownerTenantId;
+      unitForm.tenantFrom = NetDatetime(unit.tenant.from);
+      unitForm.tenantTo = NetDatetime(unit.tenant.to);
+      unitForm.tenantId = unit.tenant.personId;
+      setFormData(unitForm);
+    }
+  };
+
   useEffect(prepareFormConstants, []);
   const formLabel = generateText(mode);
   const [persons, setPersons] = useState([]);
@@ -68,8 +140,8 @@ const UnitForm = ({ url = "BaseInfo/Apartment", data, mode, onSuccess }) => {
         </div>
       </CardHeader>
       <CardBody>
-        <Form role="form" onSubmit={handleSubmit}>
-          <input name="expenseId" value={formData.unitId} hidden />
+        <Form role="form" onSubmit={unitHandleSubmit}>
+          <input name="apartmentId" value={formData.apartmentId} hidden />
           <FormGroup>
             <Row>
               <Col>
@@ -195,14 +267,14 @@ const UnitForm = ({ url = "BaseInfo/Apartment", data, mode, onSuccess }) => {
                   </div>
                   <InputGroup>
                     <Input
-                      name="occupantcount"
+                      name="occupantCount"
                       placeholder={
                         PageVariable.UnitForm.occupantcount.placeholder
                       }
                       min={1}
                       type="number"
                       step="1"
-                      value={formData.occupantcount}
+                      value={formData.occupantCount}
                       onChange={handleChange}
                     />
                   </InputGroup>
