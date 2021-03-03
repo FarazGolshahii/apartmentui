@@ -54,9 +54,7 @@ const ATable = ({ headers, tableTitle, rows, actions, children }) => {
                   ))}
                 </tbody>
               </table>
-              <CardFooter className="py-4">
-                <APagination></APagination>
-              </CardFooter>
+              <CardFooter className="py-4"></CardFooter>
             </Card>
           </div>
         </Row>

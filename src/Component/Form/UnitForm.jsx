@@ -34,6 +34,7 @@ const formDataTemplate = {
   tenantTo: null,
 };
 const UnitForm = ({ url = "BaseInfo/Expense", data, mode, onSuccess }) => {
+  const [categories, setCategories] = useState([]);
   const [formData, handleChange, handleSubmit, setFormData] = useFormData({
     mode: mode,
     data: formDataTemplate,
@@ -41,6 +42,12 @@ const UnitForm = ({ url = "BaseInfo/Expense", data, mode, onSuccess }) => {
     url,
   });
   const prepareFormConstants = async () => {
+    let { data: categoryList } = await GetData("BaseInfo/Person");
+    setCategories(categoryList);
+    const newFormData = { ...formData };
+    newFormData.Name = categoryList[0] ? categoryList[0].Name : null;
+    setFormData(newFormData);
+
     if (mode == formMode.edit) {
       const { data: unit } = await GetData(url + `/${data}`);
       unit.ownerFrom = NetDatetime(unit.from);
@@ -109,7 +116,7 @@ const UnitForm = ({ url = "BaseInfo/Expense", data, mode, onSuccess }) => {
               </Col>
             </Row>
           </FormGroup>
-          <Row>
+          {/* <Row>
             <Col xl="6" md="4" sm="3">
               <div className="text-right text-muted">
                 <small>{PageVariable.UnitForm.ownerName.headerTitle}</small>
@@ -129,7 +136,24 @@ const UnitForm = ({ url = "BaseInfo/Expense", data, mode, onSuccess }) => {
                 </Input>
               </InputGroup>
             </Col>
-          </Row>
+          </Row> */}
+          <Col>
+            <FormGroup>
+              <div className="text-right text-muted">
+                <small>{PageVariable.UnitForm.ownerName.headerTitle}</small>
+              </div>
+              <Input
+                type="select"
+                name="ownerName"
+                value={formData.ownerName}
+                onChange={handleChange}
+              >
+                {categories.map((c) => (
+                  <option value={c.Name}>{c.Name}</option>
+                ))}
+              </Input>
+            </FormGroup>
+          </Col>
           <FormGroup>
             <Row>
               <Col>

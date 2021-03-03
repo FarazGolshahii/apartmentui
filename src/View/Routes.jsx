@@ -2,11 +2,10 @@ import Dashboard from "./Dashboard/dashboard";
 import Units from "./Units/units";
 import Costs from "./Costs/costs";
 import Bill from "./Bill/bill";
-import History from "./History/History";
 import Users from "./Users/Users";
 import Building from "./Building/Building";
 import PageVariable from "../variable";
-
+import Calculate from "./Calculate/Calculate";
 const routes = [
   {
     path: "/dashboard",
@@ -30,6 +29,13 @@ const routes = [
     layout: "/admin",
   },
   {
+    path: "/Calculate",
+    name: PageVariable.Routers.Calculate,
+    icon: "fas fa-calculator",
+    component: Calculate,
+    layout: "/admin",
+  },
+  {
     path: "/bill",
     name: PageVariable.Routers.Bill,
     icon: "	fa fa-credit-card",
@@ -41,13 +47,6 @@ const routes = [
     name: PageVariable.Routers.Users,
     icon: "fa fa-users",
     component: Users,
-    layout: "/admin",
-  },
-  {
-    path: "/History",
-    name: PageVariable.Routers.History,
-    icon: "fa fa-history",
-    component: History,
     layout: "/admin",
   },
 ];

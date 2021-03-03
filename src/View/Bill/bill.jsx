@@ -10,26 +10,25 @@ import { Button, Card, Container } from "reactstrap";
 import FormModal from "../../Component/Modal/FormModal";
 import DeleteForm from "../../Component/Form/DeleteForm";
 import PageVariable from "../../variable";
-
+import BillForm from "../../Component/Form/BillForm";
 const headerTitle = [
   {
-    title: "",
-    field: "title",
+    title: "شماره واحد",
+    field: "apartmentNumber",
   },
   {
-    title: PageVariable.Costs.headerTitle.expenseCategoryName,
-    field: "expenseCategoryName",
+    title: "نام و نام خانوادگی پرداخت کننده",
+    field: "fullName",
   },
   {
-    title: PageVariable.Costs.headerTitle.amount,
-    field: "amount",
+    title: "مجموع مبالغ",
+    field: "totalCharge",
   },
   {
-    title: PageVariable.Costs.headerTitle.liveDate,
+    title: "بازه ی زمانی مشخص شده",
     field: "liveDate",
   },
 ];
-
 class BillInfo {
   constructor(data) {
     for (let item in data) {
@@ -39,28 +38,16 @@ class BillInfo {
   get liveDate() {
     return NetDatetime(this.from) + " تا " + NetDatetime(this.to);
   }
-  get id() {
-    return this.expenseId;
-  }
 }
-
 const Bills = () => {
-  const [bills, setBills] = useState([]);
-  const [modalState, toggleModal, getModalData] = useModal([
-    "add",
-    "edit",
-    "delete",
-  ]);
-
-  // useEffect(async () => {
-  //   const { data: bills } = await GetData("BaseInfo/");
-  //   setBills(bills);
-  // }, [modalState]);
+  const [costs, setCosts] = useState([]);
 
   return (
-    <Container>
-      <Card></Card>
-    </Container>
+    <ATable
+      tableTitle="صورتحساب"
+      rows={costs.map((c) => new BillInfo(c))}
+      headers={headerTitle}
+    ></ATable>
   );
 };
 

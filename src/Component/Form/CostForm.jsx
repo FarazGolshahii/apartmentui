@@ -57,7 +57,7 @@ const CostForm = ({ url = "BaseInfo/Expense", data, mode, onSuccess }) => {
   const formLabel = generateText(mode);
   return (
     <>
-      <Card className=" border-0">
+      <Card>
         <CardHeader className="bg-transparent">
           <div className="text-muted text-center">
             <Label>
