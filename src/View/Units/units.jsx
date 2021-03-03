@@ -16,7 +16,7 @@ import { ReadBuidling } from "../../Services/StorageServces/LocalStorageService"
 const headerTitle = [
   {
     title: PageVariable.Units.headerTitle.unitNumber,
-    field: "unitNumber",
+    field: "number",
   },
   {
     title: PageVariable.Units.headerTitle.area,
@@ -87,7 +87,7 @@ const Units = () => {
   ]);
 
   useEffect(async () => {
-    setUnits(await GetData(`BaseInfo/Apartment/${1}`));
+    setUnits(await GetData(`BaseInfo/Apartment/${ReadBuidling()}`));
     setPersons(await GetData("BaseInfo/Person"));
   }, [modalState]);
   return (
@@ -122,7 +122,7 @@ const Units = () => {
       />
       <FormModal
         Form={DeleteForm}
-        url="BaseInfo/Expense"
+        url="BaseInfo/Apartment"
         toggle={() => toggleModal("delete")}
         data={getModalData("delete")}
         mode={formMode.delete}
