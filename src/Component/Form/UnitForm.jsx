@@ -79,21 +79,25 @@ const UnitForm = ({ url = "BaseInfo/Apartment", data, mode, onSuccess }) => {
     }
 
     if (mode === formMode.edit) {
+      debugger;
+
       var ownerForm = {
-        ownerTenantId: formData.ownerDataId,
         from: formData.ownerFrom,
         to: formData.ownerTo,
+        personId: formData.ownerId,
         isOwner: true,
+        apartmentId: formData.apartmentId,
       };
 
       await PutData("BaseInfo/Person/EditOwnerTenant", ownerForm);
 
       if (isOpen) {
         var tenantForm = {
-          ownerTenantId: formData.tenantDataId,
+          apartmentId: formData.apartmentId,
           from: formData.tenantFrom,
           to: formData.tenantTo,
           isOwner: false,
+          personId: formData.tenantId,
           occupantCount: formData.occupantCount,
         };
 
@@ -104,21 +108,25 @@ const UnitForm = ({ url = "BaseInfo/Apartment", data, mode, onSuccess }) => {
 
   const prepareFormConstants = async () => {
     if (mode == formMode.edit) {
+      debugger;
+
       const unitForm = { ...formData };
       const unit = await GetData("BaseInfo/Apartment/Tenant" + `/${data}`);
 
       unitForm.apartmentId = unit.apartment.apartmentId;
       unitForm.area = unit.apartment.area;
       unitForm.number = unit.apartment.number;
-      unitForm.occupantCount = unit.tenant.occupantCount;
-      unitForm.ownerDataId = unit.owner.ownerTenantId;
-      unitForm.ownerFrom = NetDatetime(unit.owner.from);
-      unitForm.ownerTo = NetDatetime(unit.owner.to);
-      unitForm.ownerId = unit.owner.personId;
-      unitForm.tenantDataId = unit.tenant.ownerTenantId;
-      unitForm.tenantFrom = NetDatetime(unit.tenant.from);
-      unitForm.tenantTo = NetDatetime(unit.tenant.to);
-      unitForm.tenantId = unit.tenant.personId;
+      if (unit.owner) {
+        unitForm.ownerFrom = NetDatetime(unit.owner.from);
+        unitForm.ownerTo = NetDatetime(unit.owner.to);
+        unitForm.ownerId = unit.owner.personId;
+      }
+      if (unit.tenant) {
+        unitForm.occupantCount = unit.tenant.occupantCount;
+        unitForm.tenantFrom = NetDatetime(unit.tenant.from);
+        unitForm.tenantTo = NetDatetime(unit.tenant.to);
+        unitForm.tenantId = unit.tenant.personId;
+      }
       setFormData(unitForm);
     }
   };
